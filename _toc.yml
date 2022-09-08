@@ -1,0 +1,11 @@
+format: jb-book
+root: intro
+parts:
+  - caption : chapter 7
+    chapters:
+      - file: chapter7/7.1.0_Algo_trading
+        sections:
+          - file: chapter7/7.2.0_env_setting
+          - file: chapter7/7.3.0_connect
+          - file: chapter7/7.4.0_functions
+          - file: chapter7/7.5.0_main_function
