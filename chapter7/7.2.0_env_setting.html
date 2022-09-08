@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>개발환경 &#8212; 자동매매를 해보자</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="서비스 연결" href="7.3.0_connect.html" />
+    <link rel="prev" title="자동매매를 해보자" href="7.1.0_Algo_trading.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">자동매매를 해보자</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    자동매매를 해보자
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  chapter 7
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="7.1.0_Algo_trading.html">
+   자동매매를 해보자
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     개발환경
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.0_connect.html">
+     서비스 연결
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.4.0_functions.html">
+     주요 함수 정의
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.5.0_main_function.html">
+     자동매매 로직 이해하기
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter7/7.2.0_env_setting.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter7/7.2.0_env_setting.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   계좌개설
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#open-api">
+   Open API 인증키 발급
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   디스코드 설정
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   코딩 환경 설치
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     아나콘다 설치
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pycharm">
+     PyCharm 설치
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>개발환경</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   계좌개설
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#open-api">
+   Open API 인증키 발급
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   디스코드 설정
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   코딩 환경 설치
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     아나콘다 설치
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pycharm">
+     PyCharm 설치
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>개발환경<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="id2">
+<h2>계좌개설<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>안드로이드 혹은 앱 스토어에서 Fig 1. 에서 보이는 한국투자증권 애플리케이션을 설치 합니다.
+앱 설치 완료 후, 비대면 계좌 개설을 진행 합니다.
+신분증 촬영과 간단한 인증절차를 밟으면 어렵지 않게 계좌 개설을 완료 할 수 있습니다.</p>
+<figure class="align-default" id="https-apps-apple-com-kr-app-ed-95-9c-ea-b5-ad-ed-88-ac-ec-9e-90-id1621986905">
+<a class="reference internal image-reference" href="../_images/hanguk_app.png"><img alt="../_images/hanguk_app.png" src="../_images/hanguk_app.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">한국투자증권 애플리케이션 설치</span><a class="headerlink" href="#https-apps-apple-com-kr-app-ed-95-9c-ea-b5-ad-ed-88-ac-ec-9e-90-id1621986905" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="open-api">
+<h2>Open API 인증키 발급<a class="headerlink" href="#open-api" title="Permalink to this headline">#</a></h2>
+<p>이어서 한국투자증권의 Open API 키를 받아야 합니다.
+국내 유일 ‘REST API, Websocket’ 방식이어서 기존 증권사 API 처럼 프로그램 설치가 필요 없습니다.
+Web 을 통해서 데이터를 송/수신 하기 때문에 OS(윈도우, 맥, 리눅스) 에 상관 없이 사용 가능합니다.
+KIS Developers 홈페이지 (<a class="reference external" href="http://apiportal.koreainvestment.com">http://apiportal.koreainvestment.com</a>)로 이동한 후, API 신청을 진행 합니다.</p>
+<figure class="align-default" id="api">
+<a class="reference internal image-reference" href="../_images/api_1.png"><img alt="../_images/api_1.png" src="../_images/api_1.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">우측 상단 [API신청] 클릭</span><a class="headerlink" href="#api" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[API신청] 클릭 후, Fig 3 에서 보이는 스마트폰 인증을 통해 간단히 로그인을 할 수 있습니다.</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/api_2.png"><img alt="../_images/api_2.png" src="../_images/api_2.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">한국투자앱&gt; 전체메뉴&gt; 인증센터&gt; PC인증</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>로그인을 성공하면 모바일 [인증번호 요청] 을 클릭하고 인증번호 입력 후, [신청] 버튼을 클릭합니다.</p>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/api_3.png"><img alt="../_images/api_3.png" src="../_images/api_3.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">번호 인증 후, [신청] 클릭</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[신청] 클릭 후, 개인정보 및 고객 이용약관에 모두 동의한 후, [다음] 버튼을 클릭합니다.</p>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/api_4.png"><img alt="../_images/api_4.png" src="../_images/api_4.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">개인정보 및 고객이용약관 동의 후, [다음] 클릭</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[다음] 클릭 후, 고객명, 이메일, 핸드폰번호, 전화번호 정보가 제대로 기입되었는지 확인하고,
+계좌정보란에서 이용할 종합게좌를 선택하고 비밀번호를 입력 합니다. 모의계좌도 체크하여 임의의 계좌번호를 입력 합니다.
+API그룹란에서 모든 그룹을 선택하고 [다음] 번튼을 클릭합니다.</p>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/api_5.png"><img alt="../_images/api_5.png" src="../_images/api_5.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">계좌정보 기입 및 API그룹 모두 선택 후, [다음] 클릭</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[다음] 클릭 후, 스마트폰 인증을 완료하면 카톡을 통해 API 신청 완료 메시지를 받을 수 있습니다.
+이로써 한국투자증권의 Open API 신청을 완료했습니다.</p>
+</section>
+<section id="id7">
+<h2>디스코드 설정<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<p><em>디스코드 웹훅 URL 생성하는 방법 적기</em></p>
+</section>
+<section id="id8">
+<h2>코딩 환경 설치<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h2>
+<section id="id9">
+<h3>아나콘다 설치<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
+<p>자동매매 코드 작성을 위해 필요한 환경들을 설치하는 시간을 갖겠습니다.
+먼저 수백 개의 파이썬 패키지를 한 번에 사용할 수 있는 아나콘다 Anaconda 를
+설치하겠습니다.
+아나콘다 홈페이지(<a class="reference external" href="https://www.anaconda.com/products/distribution">https://www.anaconda.com/products/distribution</a>) 하단에서 [Download] 를 클릭합니다.</p>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="../_images/anaconda_1.png"><img alt="../_images/anaconda_1.png" src="../_images/anaconda_1.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">[Download] 클릭</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>32-Bit 버전을 설치합니다.</p>
+<figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="../_images/anaconda_2.png"><img alt="../_images/anaconda_2.png" src="../_images/anaconda_2.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Windows 32-Bit 버전 다운받기</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>다운로드 받은 아나콘다 설치 파일을 마우스 우클릭하여 관리자 권한으로 실행 합니다.</p>
+<figure class="align-default" id="id12">
+<a class="reference internal image-reference" href="../_images/anaconda_3.png"><img alt="../_images/anaconda_3.png" src="../_images/anaconda_3.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">아나콘다 설치 파일 관리자 권한으로 실행 (마우스 우클릭)</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[Next] 를 클릭하여 아나콘다 설치를 시작합니다.</p>
+<figure class="align-default" id="id13">
+<a class="reference internal image-reference" href="../_images/anaconda_4.png"><img alt="../_images/anaconda_4.png" src="../_images/anaconda_4.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">아나콘다 설치 시작 화면 [Next] 클릭</span><a class="headerlink" href="#id13" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[I Agree] 를 클릭하여 라이선스 동의서에 동의합니다.</p>
+<figure class="align-default" id="id14">
+<a class="reference internal image-reference" href="../_images/anaconda_5.png"><img alt="../_images/anaconda_5.png" src="../_images/anaconda_5.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">라이선스 동의서 [I Agree] 클릭</span><a class="headerlink" href="#id14" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[All Users] 체크 후, [Next] 를 클릭하여 설치 타입을 정합니다.</p>
+<figure class="align-default" id="id15">
+<a class="reference internal image-reference" href="../_images/anaconda_6.png"><img alt="../_images/anaconda_6.png" src="../_images/anaconda_6.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">[All Users] 타입 체크 및 [Next] 클릭</span><a class="headerlink" href="#id15" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[Next] 를 클릭하여 기본 설치 경로를 따릅니다.</p>
+<figure class="align-default" id="id16">
+<a class="reference internal image-reference" href="../_images/anaconda_7.png"><img alt="../_images/anaconda_7.png" src="../_images/anaconda_7.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">기본 설치 경로 변경하지 않고 [Next] 클릭</span><a class="headerlink" href="#id16" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>[Register Anaconda3 as the system Python 3.9] 체크하여 Python IDE에서 인터프리터를 자동 인식 할 수 있도록 설정 합니다.
+체크 후, [Install] 클릭하여 설치를 시작합니다.</p>
+<figure class="align-default" id="id17">
+<a class="reference internal image-reference" href="../_images/anaconda_8.png"><img alt="../_images/anaconda_8.png" src="../_images/anaconda_8.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">[Register Anaconda3 as the system Python 3.9] 체크 및 [Install] 클릭</span><a class="headerlink" href="#id17" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pycharm">
+<h3>PyCharm 설치<a class="headerlink" href="#pycharm" title="Permalink to this headline">#</a></h3>
+<p>파이참 PyCharm 은 파이썬 코드를 실행하고 그 결과를 확인하는 IDE 입니다. (IDE 설명 추가)
+PyCharm 파이참 홈페이지에서 (<a class="reference external" href="https://www.jetbrains.com/ko-kr/pycharm/download/#section=windows">https://www.jetbrains.com/ko-kr/pycharm/download/#section=windows</a>)
+Community 버전을 다운 받습니다.</p>
+<figure class="align-default" id="id18">
+<a class="reference internal image-reference" href="../_images/PyCharm_1.png"><img alt="../_images/PyCharm_1.png" src="../_images/PyCharm_1.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Community 버전 [Download] 클릭</span><a class="headerlink" href="#id18" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>다운로드 받은 설치 파일을 실행 시키고,
+Welcome Page 가 뜨면 [Next] 버튼을 클릭 합니다.</p>
+<figure class="align-default" id="id19">
+<a class="reference internal image-reference" href="../_images/PyCharm_2.png"><img alt="../_images/PyCharm_2.png" src="../_images/PyCharm_2.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Welcome Page 에서 [Next] 클릭</span><a class="headerlink" href="#id19" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>설치 경로를 설정한 후, [Next] 버튼을 클릭 합니다.</p>
+<figure class="align-default" id="id20">
+<a class="reference internal image-reference" href="../_images/PyCharm_3.png"><img alt="../_images/PyCharm_3.png" src="../_images/PyCharm_3.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">설치 경로 설정 및 [Next] 클릭</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>설치 옵션 화면에서 모든 옵션을 선택 후, [Next] 버튼을 클릭 합니다.</p>
+<figure class="align-default" id="id21">
+<a class="reference internal image-reference" href="../_images/PyCharm_4.png"><img alt="../_images/PyCharm_4.png" src="../_images/PyCharm_4.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">모든 옵션 선택 및 [Next] 클릭</span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>시작 메뉴 이름 설정 후, [Install] 버튼을 클릭 합니다.</p>
+<figure class="align-default" id="id22">
+<a class="reference internal image-reference" href="../_images/PyCharm_5.png"><img alt="../_images/PyCharm_5.png" src="../_images/PyCharm_5.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">시작 메뉴 이름 설정 및 [Install] 클릭</span><a class="headerlink" href="#id22" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>마지막으로 재부팅을 바로 실행하거나 나중에 실행하기 선택 후 [Finish] 버튼을 클릭 합니다.</p>
+<figure class="align-default" id="id23">
+<a class="reference internal image-reference" href="../_images/PyCharm_6.png"><img alt="../_images/PyCharm_6.png" src="../_images/PyCharm_6.png" style="width: 600px; height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">재부팅 옵션 선택 및 [Finish] 클릭</span><a class="headerlink" href="#id23" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter7"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="7.1.0_Algo_trading.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">자동매매를 해보자</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="7.3.0_connect.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">서비스 연결</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By The Jupyter Book Community<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
