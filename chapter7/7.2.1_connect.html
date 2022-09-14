@@ -52,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="주요 함수 정의" href="7.4.0_functions.html" />
-    <link rel="prev" title="개발환경" href="7.2.0_env_setting.html" />
+    <link rel="next" title="주요 함수 정의" href="7.2.2_functions.html" />
+    <link rel="prev" title="개발환경" href="7.2.0_env_setting_hanguk.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -125,7 +125,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="7.2.0_env_setting.html">
+    <a class="reference internal" href="7.2.0_env_setting_hanguk.html">
      개발환경
     </a>
    </li>
@@ -135,13 +135,38 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.4.0_functions.html">
+    <a class="reference internal" href="7.2.2_functions.html">
      주요 함수 정의
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.5.0_main_function.html">
+    <a class="reference internal" href="7.2.3_main_function.html">
      자동매매 로직 이해하기
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.0_env_setting_ebest.html">
+     개발환경
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.1_login.html">
+     자동 로그인
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.2_accnt.html">
+     계좌 정보 조회
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.3_xr.html">
+     실시간 데이터 받아오기
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.4_ord.html">
+     자동으로 주문넣기
     </a>
    </li>
   </ul>
@@ -205,7 +230,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/chapter7/7.3.0_connect.ipynb"
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/chapter7/7.2.1_connect.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -265,7 +290,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter7/7.3.0_connect.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter7/7.2.1_connect.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -293,7 +318,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/chapter7/7.3.0_connect.ipynb"
+        <a href="../_sources/chapter7/7.2.1_connect.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -472,7 +497,7 @@ requests 패키지는 HTTP 요청을 보낼 때, json 은 수신 받은 객체�
 </div>
 <p>현재가 조회와 매수 주문 코드 예제를 보면서 GET 과 POST 호출 방식의 비슷한 점들을 발견하셨을 겁니다.
 requests.get() 과 reqeusts.post() 모두 URL, headers, 그리고 params 혹은 data 파라미터가 필요합니다.
-결국 요청의 목적에 따라서 URL 의 PATH 변수, headers 딕셔너리의 key 값, 그리고 params 혹은 data 딕셔너리의 key 값들을 교체 해주면 성공적으로 요청 작업을 완료 할 수 있습니다.
+결국 요청의 목적에 따라서 URL 의 PATH 변수, headers 딕셔너리의 key 값, 그리고 params 혹은 data 딕셔너리의 key 값들을 교체 해주면 요청 작업을 진행 할 수 있습니다.
 요청에 따른 인자 값 변경은 KIS developers 홈페이지에서 (<a class="reference external" href="https://apiportal.koreainvestment.com/">https://apiportal.koreainvestment.com/</a>) 더 자세한 정보를 확인할 수 있습니다.
 한편, headers 와 data 에서 반복적으로 사용되는 개인 정보들은 config.yaml 파일에 일괄적으로 저장 해두면 훨씬 더 간결한 코드를 작성 하실 수 있습니다.</p>
 <div class="cell docutils container">
@@ -489,9 +514,9 @@ requests.get() 과 reqeusts.post() 모두 URL, headers, 그리고 params 혹은 
 <span class="n">ACNT_PRDT_CD</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span>
 
 <span class="c1">#실전투자</span>
-<span class="n">URL_BASE</span><span class="p">:</span> <span class="s2">&quot;https://openapi.koreainvestment.com:9443&quot;</span>
+<span class="c1"># URL_BASE: &quot;https://openapi.koreainvestment.com:9443&quot;</span>
 <span class="c1">#모의투자</span>
-<span class="c1"># URL_BASE: &quot;https://openapivts.koreainvestment.com:29443&quot;</span>
+<span class="n">URL_BASE</span><span class="p">:</span> <span class="s2">&quot;https://openapivts.koreainvestment.com:29443&quot;</span>
 
 <span class="c1">#디스코드 웹훅 URL</span>
 <span class="n">DISCORD_WEBHOOK_URL</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
@@ -528,14 +553,14 @@ requests.get() 과 reqeusts.post() 모두 URL, headers, 그리고 params 혹은 
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="7.2.0_env_setting.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="7.2.0_env_setting_hanguk.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">개발환경</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="7.4.0_functions.html" title="next page">
+    <a class='right-next' id="next-link" href="7.2.2_functions.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">주요 함수 정의</p>
