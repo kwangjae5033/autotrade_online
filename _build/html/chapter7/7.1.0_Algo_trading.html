@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="개발환경" href="7.2.0_env_setting.html" />
+    <link rel="next" title="개발환경" href="7.2.0_env_setting_hanguk.html" />
     <link rel="prev" title="자동매매를 해보자" href="../intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -125,23 +125,48 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.2.0_env_setting.html">
+    <a class="reference internal" href="7.2.0_env_setting_hanguk.html">
      개발환경
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.3.0_connect.html">
+    <a class="reference internal" href="7.2.1_connect.html">
      서비스 연결
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.4.0_functions.html">
+    <a class="reference internal" href="7.2.2_functions.html">
      주요 함수 정의
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.5.0_main_function.html">
+    <a class="reference internal" href="7.2.3_main_function.html">
      자동매매 로직 이해하기
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.0_env_setting_ebest.html">
+     개발환경
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.1_login.html">
+     자동 로그인
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.2_accnt.html">
+     계좌 정보 조회
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.3_xr.html">
+     실시간 데이터 받아오기
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.4_ord.html">
+     자동으로 주문넣기
     </a>
    </li>
   </ul>
@@ -329,16 +354,16 @@ title="Print to PDF"
 <h1>자동매매를 해보자<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <p>앞장에서 추천한 종목을 받아서 자동매매를 해보는 시간 입니다.
 자동매매 프로그래밍은 파이썬으로 투자 전략을 구현하고,
-한국투자증권 API 를 이용해서 자동 매수/매도를 진행 합니다.
-프로그램이 잘 돌아가고 있는 지를 확인하고 경과를 지켜볼 수 있도록 Discord 에 해당 메시지들을 전달합니다.
-Discord 서비스를 활용하면 웹과 모바일을 통해 간편하게 메시지를 확인 할 수 있습니다.</p>
+이베스트투자증권이나 한국투자증권 API 를 이용해서 자동 매수/매도를 진행 합니다.
+프로그램이 잘 돌아가고 있는 지를 확인하고 경과를 지켜볼 수 있도록 Discord 에 자동매매 로그 메시지들을 전달합니다. Discord 서비스를 활용하면 웹과 모바일을 통해 간편하게 메시지를 확인 할 수 있습니다.</p>
 <p>자동매매 프로그램을 실행하는 파이썬 코드의 플로우 차트는 아래 그림과 같습니다.
 장이 시작하기 전, PC 자동 부팅부터 매수/매도 종목 파일을 읽는 프로세스 까지 실행 하고,
 장이 시작되면 매수/매도 종목에 대한 실시간 체결 데이터를 조회 합니다.
 장이 끝날 때까지 체결 데이터와 매수/매도 목표가를 비교하면서 자동 주문을 실행하는 코드 입니다.</p>
-<a class="reference internal image-reference" href="chapter7/images/flow_chart.png"><img alt="chapter7/images/flow_chart.png" class="align-center" src="chapter7/images/flow_chart.png" style="width: 800px; height: 500px;" /></a>
-<p>코드 전개를 잘 이해하기 위해서는 플로우 차트와 함께 API 작동 방식 또한 잘 이해 해야 합니다.
-API 작동 방식을 자세히 알아보기 전에, 개발 환경 설정을 끝내고 코드와 함께 API 설명을 이어 나가겠습니다.</p>
+<a class="reference internal image-reference" href="../_images/flow_chart.png"><img alt="../_images/flow_chart.png" class="align-center" src="../_images/flow_chart.png" style="width: 800px; height: 500px;" /></a>
+<p>코드 전개를 잘 이해하기 위해서는 플로우 차트와 함께 API 작동 방식 또한 잘 이해해야 합니다.
+API 작동 방식을 자세히 알아보기 전에, 개발 환경 설정을 끝내고 코드와 함께 API 설명을 이어 나가겠습니다.
+API 사용법은 한국투자증권 그리고 이베스트투자증권 순서로 설명하겠습니다.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -377,7 +402,7 @@ API 작동 방식을 자세히 알아보기 전에, 개발 환경 설정을 끝�
             <p class="prev-next-title">자동매매를 해보자</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="7.2.0_env_setting.html" title="next page">
+    <a class='right-next' id="next-link" href="7.2.0_env_setting_hanguk.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">개발환경</p>

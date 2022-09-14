@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>서비스 연결 &#8212; 자동매매를 해보자</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="주요 함수 정의" href="7.2.2_functions.html" />
+    <link rel="prev" title="개발환경" href="7.2.0_env_setting_hanguk.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">자동매매를 해보자</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    자동매매를 해보자
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  chapter 7
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="7.1.0_Algo_trading.html">
+   자동매매를 해보자
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.2.0_env_setting_hanguk.html">
+     개발환경
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     서비스 연결
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.2.2_functions.html">
+     주요 함수 정의
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.2.3_main_function.html">
+     자동매매 로직 이해하기
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.0_env_setting_ebest.html">
+     개발환경
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.1_login.html">
+     자동 로그인
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.2_accnt.html">
+     계좌 정보 조회
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.3_xr.html">
+     실시간 데이터 받아오기
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.3.4_ord.html">
+     자동으로 주문넣기
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/chapter7/7.2.1_connect.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter7/7.2.1_connect.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter7/7.2.1_connect.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>서비스 연결</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="id1">
+<h1>서비스 연결<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<p>API 요청을 하기 위해 requests 와 json 패키지를 불러줍니다.
+requests 패키지는 HTTP 요청을 보낼 때, json 은 수신 받은 객체를 JSON 데이터로 만들어서 쓰기 위해 활용되는 모듈입니다.
+참고로 JSON 데이터는 pandas 데이터프레임으로 변환하기 쉬운 이점도 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span> 
+<span class="kn">import</span> <span class="nn">json</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>requests 는 크게 GET 방식과 POST 방식이 있습니다. GET 방식은 현재가 혹은 주식 잔고조회 같은 요청에서 쓰이고, POST 방식은 주로 주문/정정/취소 요청에서 쓰입니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;주식 종목 현재가 조회&quot;&quot;&quot;</span>
+
+<span class="c1"># 다음 장에서 더 자세히 설명 드립니다. </span>
+<span class="c1"># requests.get() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, params)</span>
+
+<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapi.koreainvestment.com:9443&quot;</span> <span class="c1"># 실전 투자</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/quotations/inquire-price&quot;</span> <span class="c1"># 현재가 조회를 위한 URL 경로</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;&quot;</span>
+<span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;005930&quot;</span> <span class="c1"># 삼성전자 종목 코드</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="c1"># 보안인증키</span>
+    <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Key</span>
+    <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Secret</span>
+    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;FHKST01010100&quot;</span> <span class="c1"># 현재가 조회를 위한 id</span>
+<span class="p">}</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;fid_cond_mrkt_div_code&quot;</span><span class="p">:</span><span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="c1"># J: 주식</span>
+    <span class="s2">&quot;fid_input_iscd&quot;</span><span class="p">:</span><span class="n">code</span><span class="p">,</span> <span class="c1"># 조회 하고 싶은 주식 종목의 코드 ex) 삼성전자: 005930</span>
+<span class="p">}</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output&#39;</span><span class="p">][</span><span class="s1">&#39;stck_prpr&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>상대적으로 보안이 중요한 POST 는 hashkey 를 활용해 암호화를 진행합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;주식 시장가 매수&quot;&quot;&quot;</span>
+
+<span class="c1"># 다음 장에서 더 자세히 설명 드립니다. </span>
+<span class="c1"># requests.post() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, data)</span>
+
+<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapi.koreainvestment.com:9443&quot;</span> <span class="c1"># 실전 투자</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/trading/order-cash&quot;</span> <span class="c1"># cash 주문</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;005930&quot;</span> <span class="c1"># 삼성전자 종목 코드</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;CANO&quot;</span><span class="p">:</span> <span class="n">CANO</span><span class="p">,</span> <span class="c1"># 계좌번호 앞자리</span>
+    <span class="s2">&quot;ACNT_PRDT_CD&quot;</span><span class="p">:</span> <span class="n">ACNT_PRDT_CD</span><span class="p">,</span>  <span class="c1"># 계좌번호 뒷자리</span>
+    <span class="s2">&quot;PDNO&quot;</span><span class="p">:</span> <span class="n">code</span><span class="p">,</span>
+    <span class="s2">&quot;ORD_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span> <span class="c1"># 시장가</span>
+    <span class="s2">&quot;ORD_QTY&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">qty</span><span class="p">)),</span> <span class="c1"># 매수 주문 수량</span>
+    <span class="s2">&quot;ORD_UNPR&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="c1"># 시장가로 매수 시, ORD_UNPR 는 0 (지정가로 매수 시, ORD_UNPR 는 원하는 지정가로 명시) </span>
+<span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;authorization&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="c1"># 보안인증키</span>
+    <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>  <span class="c1"># API 신청으로 발금 받은 Key</span>
+    <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Secret</span>
+    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;TTTC0802U&quot;</span><span class="p">,</span> <span class="c1"># 매수 주문을 위한 id</span>
+    <span class="s2">&quot;custtype&quot;</span><span class="p">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="c1"># P: 개인 </span>
+    <span class="s2">&quot;hashkey&quot;</span> <span class="p">:</span> <span class="n">hashkey</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>해쉬키 함수는 다음과 같이 정의 되어 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hashkey</span><span class="p">(</span><span class="n">datas</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;암호화&quot;&quot;&quot;</span>
+    <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/hashkey&quot;</span>
+    <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;content-Type&#39;</span> <span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;appKey&#39;</span> <span class="p">:</span> <span class="n">APP_KEY</span><span class="p">,</span>
+    <span class="s1">&#39;appSecret&#39;</span> <span class="p">:</span> <span class="n">APP_SECRET</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">datas</span><span class="p">))</span>
+    <span class="n">hashkey</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;HASH&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">hashkey</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>위 예제 코드의 GET 과 POST 방식 모두 headers 에서 ACCESS_TOKEN 을 필요로 하는데, get_access_token() 함수에서 APP_KEY 와 APP_SECRET 를 이용해서 발급 받을 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_access_token</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;토큰 발급&quot;&quot;&quot;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;grant_type&quot;</span><span class="p">:</span><span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appkey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>
+    <span class="s2">&quot;appsecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">}</span>
+    <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;oauth2/tokenP&quot;</span>
+    <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+    <span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ACCESS_TOKEN</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>현재가 조회와 매수 주문 코드 예제를 보면서 GET 과 POST 호출 방식의 비슷한 점들을 발견하셨을 겁니다.
+requests.get() 과 reqeusts.post() 모두 URL, headers, 그리고 params 혹은 data 파라미터가 필요합니다.
+결국 요청의 목적에 따라서 URL 의 PATH 변수, headers 딕셔너리의 key 값, 그리고 params 혹은 data 딕셔너리의 key 값들을 교체 해주면 요청 작업을 진행 할 수 있습니다.
+요청에 따른 인자 값 변경은 KIS developers 홈페이지에서 (<a class="reference external" href="https://apiportal.koreainvestment.com/">https://apiportal.koreainvestment.com/</a>) 더 자세한 정보를 확인할 수 있습니다.
+한편, headers 와 data 에서 반복적으로 사용되는 개인 정보들은 config.yaml 파일에 일괄적으로 저장 해두면 훨씬 더 간결한 코드를 작성 하실 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;config.yaml 파일 생성&quot;&quot;&quot;</span>
+
+<span class="c1">#홈페이지에서 API서비스 신청시 받은 Appkey, Appsecret 값 설정</span>
+<span class="n">APP_KEY</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+<span class="n">APP_SECRET</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+
+<span class="c1">#계좌번호 앞 8자리</span>
+<span class="n">CANO</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxx&quot;</span>
+<span class="c1">#계좌번호 뒤 2자리</span>
+<span class="n">ACNT_PRDT_CD</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span>
+
+<span class="c1">#실전투자</span>
+<span class="c1"># URL_BASE: &quot;https://openapi.koreainvestment.com:9443&quot;</span>
+<span class="c1">#모의투자</span>
+<span class="n">URL_BASE</span><span class="p">:</span> <span class="s2">&quot;https://openapivts.koreainvestment.com:29443&quot;</span>
+
+<span class="c1">#디스코드 웹훅 URL</span>
+<span class="n">DISCORD_WEBHOOK_URL</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter7"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="7.2.0_env_setting_hanguk.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">개발환경</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="7.2.2_functions.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">주요 함수 정의</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By The Jupyter Book Community<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
