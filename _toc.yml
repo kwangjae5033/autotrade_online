@@ -5,12 +5,13 @@ parts:
     chapters:
       - file: chapter7/7.1.0_Algo_trading
         sections:
-          - file: chapter7/7.2.0_env_setting_hanguk
-          - file: chapter7/7.2.1_connect
-          - file: chapter7/7.2.2_functions
-          - file: chapter7/7.2.3_main_function
-          - file: chapter7/7.3.0_env_setting_ebest
-          - file: chapter7/7.3.1_login
-          - file: chapter7/7.3.2_accnt
-          - file: chapter7/7.3.3_xr
-          - file: chapter7/7.3.4_ord
+          - file: chapter7/7.2.0_env_setting
+          - file: chapter7/7.2.1_create_accnt_hanguk
+          - file: chapter7/7.2.2_connect_hanguk
+          - file: chapter7/7.2.3_functions_hanguk
+          - file: chapter7/7.2.4_main_hanguk
+          - file: chapter7/7.3.0_create_accnt_ebest
+          - file: chapter7/7.3.1_login_ebest
+          - file: chapter7/7.3.2_accnt_ebest
+          - file: chapter7/7.3.3_xr_ebest
+          - file: chapter7/7.3.4_ord_ebest

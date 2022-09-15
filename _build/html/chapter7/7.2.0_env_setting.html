@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="서비스 연결" href="7.2.1_connect.html" />
+    <link rel="next" title="한국투자증권" href="7.2.1_create_accnt_hanguk.html" />
     <link rel="prev" title="자동매매를 해보자" href="7.1.0_Algo_trading.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -130,42 +130,47 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.2.1_connect.html">
+    <a class="reference internal" href="7.2.1_create_accnt_hanguk.html">
+     한국투자증권
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="7.2.2_connect_hanguk.html">
      서비스 연결
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.2.2_functions.html">
+    <a class="reference internal" href="7.2.3_functions_hanguk.html">
      주요 함수 정의
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.2.3_main_function.html">
+    <a class="reference internal" href="7.2.4_main_hanguk.html">
      자동매매 로직 이해하기
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.3.0_env_setting_ebest.html">
-     개발환경
+    <a class="reference internal" href="7.3.0_create_accnt_ebest.html">
+     이베스트투자증권
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.3.1_login.html">
+    <a class="reference internal" href="7.3.1_login_ebest.html">
      자동 로그인
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.3.2_accnt.html">
+    <a class="reference internal" href="7.3.2_accnt_ebest.html">
      계좌 정보 조회
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.3.3_xr.html">
+    <a class="reference internal" href="7.3.3_xr_ebest.html">
      실시간 데이터 받아오기
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="7.3.4_ord.html">
+    <a class="reference internal" href="7.3.4_ord_ebest.html">
      자동으로 주문넣기
     </a>
    </li>
@@ -261,7 +266,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter7/7.2.0_env_setting_hanguk.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter7/7.2.0_env_setting.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -289,7 +294,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/chapter7/7.2.0_env_setting_hanguk.md"
+        <a href="../_sources/chapter7/7.2.0_env_setting.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -367,16 +372,6 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id18">
-   계좌개설
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#open-api">
-   Open API 인증키 발급
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id23">
    디스코드 설정
   </a>
  </li>
@@ -418,16 +413,6 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id18">
-   계좌개설
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#open-api">
-   Open API 인증키 발급
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id23">
    디스코드 설정
   </a>
  </li>
@@ -457,7 +442,7 @@ title="Print to PDF"
 <p><span class="caption-number">Fig. 1 </span><span class="caption-text">[Download] 클릭</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>이베스트투자증권 API 와 호환성을 갖기 위해 32-Bit 버전을 설치합니다.</p>
+<p>한국투자증권과 이베스트투자증권의 각 API 모두 호환성을 갖기 위해 32-Bit 버전을 설치합니다.</p>
 <figure class="align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/anaconda_2.png"><img alt="../_images/anaconda_2.png" src="../_images/anaconda_2.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
@@ -510,8 +495,8 @@ title="Print to PDF"
 </section>
 <section id="pycharm">
 <h3>PyCharm 설치<a class="headerlink" href="#pycharm" title="Permalink to this headline">#</a></h3>
-<p>파이참 PyCharm 은 파이썬 코드를 실행하고 그 결과를 확인하는 IDE 입니다. (IDE 설명 추가)
-PyCharm 파이참 홈페이지에서 (<a class="reference external" href="https://www.jetbrains.com/ko-kr/pycharm/download/#section=windows">https://www.jetbrains.com/ko-kr/pycharm/download/#section=windows</a>)
+<p>파이참(PyCharm) 은 파이썬 코드를 실행하고 그 결과를 확인하는 IDE 입니다. (IDE 설명 추가)
+PyCharm 파이참 홈페이지에서(<a class="reference external" href="https://www.jetbrains.com/ko-kr/pycharm/download/#section=windows">https://www.jetbrains.com/ko-kr/pycharm/download/#section=windows</a>)
 Community 버전을 다운 받습니다.</p>
 <figure class="align-default" id="id12">
 <a class="reference internal image-reference" href="../_images/PyCharm_1.png"><img alt="../_images/PyCharm_1.png" src="../_images/PyCharm_1.png" style="width: 600px; height: 400px;" /></a>
@@ -558,111 +543,54 @@ Welcome Page 가 뜨면 [Next] 버튼을 클릭 합니다.</p>
 </section>
 </section>
 <section id="id18">
-<h2>계좌개설<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h2>
-<p>안드로이드 혹은 앱 스토어에서 Fig 1. 에서 보이는 한국투자증권 애플리케이션을 설치 합니다.
-앱 설치 완료 후, 비대면 계좌 개설을 진행 합니다.
-신분증 촬영과 간단한 인증절차를 밟으면 어렵지 않게 계좌 개설을 완료 할 수 있습니다.</p>
-<figure class="align-default" id="https-apps-apple-com-kr-app-ed-95-9c-ea-b5-ad-ed-88-ac-ec-9e-90-id1621986905">
-<a class="reference internal image-reference" href="../_images/hanguk_app.png"><img alt="../_images/hanguk_app.png" src="../_images/hanguk_app.png" style="width: 600px; height: 400px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">한국투자증권 애플리케이션 설치</span><a class="headerlink" href="#https-apps-apple-com-kr-app-ed-95-9c-ea-b5-ad-ed-88-ac-ec-9e-90-id1621986905" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="open-api">
-<h2>Open API 인증키 발급<a class="headerlink" href="#open-api" title="Permalink to this headline">#</a></h2>
-<p>이어서 한국투자증권의 Open API 키를 받아야 합니다.
-국내 유일 ‘REST API, Websocket’ 방식이어서 기존 증권사 API 처럼 프로그램 설치가 필요 없습니다.
-Web 을 통해서 데이터를 송/수신 하기 때문에 OS(윈도우, 맥, 리눅스) 에 상관 없이 사용 가능합니다.
-KIS Developers 홈페이지 (<a class="reference external" href="http://apiportal.koreainvestment.com">http://apiportal.koreainvestment.com</a>)로 이동한 후, API 신청을 진행 합니다.</p>
-<figure class="align-default" id="api">
-<a class="reference internal image-reference" href="../_images/api_1.png"><img alt="../_images/api_1.png" src="../_images/api_1.png" style="width: 600px; height: 200px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">우측 상단 [API신청] 클릭</span><a class="headerlink" href="#api" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>[API신청] 클릭 후, Fig 3 에서 보이는 스마트폰 인증을 통해 간단히 로그인을 할 수 있습니다.</p>
-<figure class="align-default" id="id19">
-<a class="reference internal image-reference" href="../_images/api_2.png"><img alt="../_images/api_2.png" src="../_images/api_2.png" style="width: 600px; height: 400px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">한국투자앱&gt; 전체메뉴&gt; 인증센터&gt; PC인증</span><a class="headerlink" href="#id19" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>로그인을 성공하면 모바일 [인증번호 요청] 을 클릭하고 인증번호 입력 후, [신청] 버튼을 클릭합니다.</p>
-<figure class="align-default" id="id20">
-<a class="reference internal image-reference" href="../_images/api_3.png"><img alt="../_images/api_3.png" src="../_images/api_3.png" style="width: 600px; height: 400px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 18 </span><span class="caption-text">번호 인증 후, [신청] 클릭</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>[신청] 클릭 후, 개인정보 및 고객 이용약관에 모두 동의한 후, [다음] 버튼을 클릭합니다.</p>
-<figure class="align-default" id="id21">
-<a class="reference internal image-reference" href="../_images/api_4.png"><img alt="../_images/api_4.png" src="../_images/api_4.png" style="width: 600px; height: 400px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 19 </span><span class="caption-text">개인정보 및 고객이용약관 동의 후, [다음] 클릭</span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>[다음] 클릭 후, 고객명, 이메일, 핸드폰번호, 전화번호 정보가 제대로 기입되었는지 확인하고,
-계좌정보란에서 이용할 종합게좌를 선택하고 비밀번호를 입력 합니다. 모의계좌도 체크하여 임의의 계좌번호를 입력 합니다.
-API그룹란에서 모든 그룹을 선택하고 [다음] 번튼을 클릭합니다.</p>
-<figure class="align-default" id="id22">
-<a class="reference internal image-reference" href="../_images/api_5.png"><img alt="../_images/api_5.png" src="../_images/api_5.png" style="width: 600px; height: 400px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 20 </span><span class="caption-text">계좌정보 기입 및 API그룹 모두 선택 후, [다음] 클릭</span><a class="headerlink" href="#id22" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>[다음] 클릭 후, 스마트폰 인증을 완료하면 카톡을 통해 API 신청 완료 메시지를 받을 수 있습니다.
-이로써 한국투자증권의 Open API 신청을 완료했습니다.</p>
-</section>
-<section id="id23">
-<h2>디스코드 설정<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h2>
+<h2>디스코드 설정<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h2>
 <p>자동매매 경과를 모니터링 할 수 있는 디스코드 설정을 진행 하겠습니다. 먼저 디스코드 홈페이지(<a class="reference external" href="https://discord.com/">https://discord.com/</a>) 를 방문하여 회원가입을 진행 합니다. 회원가입을 완료 후, [웹브라우저에서 Discord 열기] 를 클릭합니다. 디스코드 웹 APP 및 모바일 APP 을 다운 받으면 메시지를 더 편리하게 받아 볼 수 있습니다.</p>
-<figure class="align-default" id="id24">
+<figure class="align-default" id="id19">
 <a class="reference internal image-reference" href="../_images/discord_1.png"><img alt="../_images/discord_1.png" src="../_images/discord_1.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 21 </span><span class="caption-text">회원가입 후, [웹브라우저에서 Discord 열기] 클릭</span><a class="headerlink" href="#id24" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">회원가입 후, [웹브라우저에서 Discord 열기] 클릭</span><a class="headerlink" href="#id19" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>웹브라우저에서 디스코드가 열리면, 화면의 좌측 플러스(“+”) 아이콘을 클릭합니다.</p>
-<figure class="align-default" id="id25">
+<figure class="align-default" id="id20">
 <a class="reference internal image-reference" href="../_images/discord_2.png"><img alt="../_images/discord_2.png" src="../_images/discord_2.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 22 </span><span class="caption-text">화면 좌측 플러스 아이콘 클릭</span><a class="headerlink" href="#id25" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">화면 좌측 플러스 아이콘 클릭</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>“서버만들기” 팝업이 뜨면 [직접만들기] 버튼을 클릭합니다.</p>
-<figure class="align-default" id="id26">
+<figure class="align-default" id="id21">
 <a class="reference internal image-reference" href="../_images/discord_3.png"><img alt="../_images/discord_3.png" src="../_images/discord_3.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 23 </span><span class="caption-text">[직접만들기] 클릭</span><a class="headerlink" href="#id26" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">[직접만들기] 클릭</span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>이어서 [나와친구들을 위한 서버] 버튼을 클릭합니다.</p>
-<figure class="align-default" id="id27">
+<figure class="align-default" id="id22">
 <a class="reference internal image-reference" href="../_images/discord_4.png"><img alt="../_images/discord_4.png" src="../_images/discord_4.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 24 </span><span class="caption-text">[나와친구들을 위한 서버] 클릭</span><a class="headerlink" href="#id27" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">[나와친구들을 위한 서버] 클릭</span><a class="headerlink" href="#id22" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>서버 이름은 자유롭게 정하고 [만들기] 버튼을 클릭합니다.</p>
-<figure class="align-default" id="id28">
+<figure class="align-default" id="id23">
 <a class="reference internal image-reference" href="../_images/discord_5.png"><img alt="../_images/discord_5.png" src="../_images/discord_5.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 25 </span><span class="caption-text">서버이름 작성 및 [만들기] 클릭</span><a class="headerlink" href="#id28" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">서버이름 작성 및 [만들기] 클릭</span><a class="headerlink" href="#id23" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>서버가 만들어지면 채팅 채널란 밑에 “# 일반” 혹은 “# general” 의 설정 아이콘(채널 편집) 을 클릭합니다.</p>
-<figure class="align-default" id="id29">
+<figure class="align-default" id="id24">
 <a class="reference internal image-reference" href="../_images/discord_6.png"><img alt="../_images/discord_6.png" src="../_images/discord_6.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 26 </span><span class="caption-text">화면 좌측 “# 일반” 설정 아이콘 클릭</span><a class="headerlink" href="#id29" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">화면 좌측 “# 일반” 설정 아이콘 클릭</span><a class="headerlink" href="#id24" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>이어서 왼쪽에 있는 [연동] 세션을 클릭하고 [웹후크 만들기] 버튼을 클릭합니다.</p>
-<figure class="align-default" id="id30">
+<figure class="align-default" id="id25">
 <a class="reference internal image-reference" href="../_images/discord_7.png"><img alt="../_images/discord_7.png" src="../_images/discord_7.png" style="width: 600px; height: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 27 </span><span class="caption-text">화면 좌측 [연동] 클릭 후, [웹후크 만들기] 클릭</span><a class="headerlink" href="#id30" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">화면 좌측 [연동] 클릭 후, [웹후크 만들기] 클릭</span><a class="headerlink" href="#id25" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>마지막으로 [웹후크 URL 복사] 버튼을 클릭하고, 코딩할 때 쓸 수 있도록 저장해둡니다.</p>
@@ -703,10 +631,10 @@ API그룹란에서 모든 그룹을 선택하고 [다음] 번튼을 클릭합니
             <p class="prev-next-title">자동매매를 해보자</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="7.2.1_connect.html" title="next page">
+    <a class='right-next' id="next-link" href="7.2.1_create_accnt_hanguk.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">서비스 연결</p>
+        <p class="prev-next-title">한국투자증권</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
