@@ -405,9 +405,9 @@ requests 패키지는 HTTP 요청을 보낼 때, json 은 수신 받은 객체�
 <span class="c1"># 다음 장에서 더 자세히 설명 드립니다. </span>
 <span class="c1"># requests.get() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, params)</span>
 
-<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapi.koreainvestment.com:9443&quot;</span> <span class="c1"># 실전 투자</span>
+<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapivts.koreainvestment.com:29443&quot;</span> <span class="c1"># 모의 투자</span>
 <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/quotations/inquire-price&quot;</span> <span class="c1"># 현재가 조회를 위한 URL 경로</span>
-<span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;&quot;</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;005930&quot;</span> <span class="c1"># 삼성전자 종목 코드</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
@@ -437,7 +437,7 @@ requests 패키지는 HTTP 요청을 보낼 때, json 은 수신 받은 객체�
 <span class="c1"># 다음 장에서 더 자세히 설명 드립니다. </span>
 <span class="c1"># requests.post() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, data)</span>
 
-<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapi.koreainvestment.com:9443&quot;</span> <span class="c1"># 실전 투자</span>
+<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapivts.koreainvestment.com:29443&quot;</span> <span class="c1"># 모의 투자</span>
 <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/trading/order-cash&quot;</span> <span class="c1"># cash 주문</span>
 <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;005930&quot;</span> <span class="c1"># 삼성전자 종목 코드</span>
@@ -453,7 +453,7 @@ requests 패키지는 HTTP 요청을 보낼 때, json 은 수신 받은 객체�
     <span class="s2">&quot;authorization&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="c1"># 보안인증키</span>
     <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>  <span class="c1"># API 신청으로 발금 받은 Key</span>
     <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Secret</span>
-    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;TTTC0802U&quot;</span><span class="p">,</span> <span class="c1"># 매수 주문을 위한 id</span>
+    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;VTTC0802U&quot;</span><span class="p">,</span> <span class="c1"># 매수 주문을 위한 id</span>
     <span class="s2">&quot;custtype&quot;</span><span class="p">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="c1"># P: 개인 </span>
     <span class="s2">&quot;hashkey&quot;</span> <span class="p">:</span> <span class="n">hashkey</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="p">}</span>

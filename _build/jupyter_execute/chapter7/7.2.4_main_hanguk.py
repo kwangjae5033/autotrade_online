@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# Reference:
-# 
-# 1. KIS DEVELOPERS (참조 규칙)
-# 2. Support : 조코딩 (한국투자증권 API)
-
 # # 자동매매 로직 이해하기
+
+# ![GET_IMAGE](images/hanguk_logic.png)
 
 # 자동매매 코드는 다음과 같이 크게 네 파트로 구분되어 있습니다.
 
@@ -179,14 +176,33 @@ def get_current_price(code="005930"):
             "authorization": f"Bearer {ACCESS_TOKEN}",
             "appKey":APP_KEY,
             "appSecret":APP_SECRET,
-            "tr_id":"FHKST01010100"
-    }
+            "tr_id":"FHKST01010100"}
     params = {
     "fid_cond_mrkt_div_code":"J",
     "fid_input_iscd":code,
     }
     res = requests.get(URL, headers=headers, params=params)
     return int(res.json()['output']['stck_prpr'])
+
+def get_target_price(code="005930"):
+    """전날 종가 조회"""
+    PATH = "uapi/domestic-stock/v1/quotations/inquire-daily-price"
+    URL = f"{URL_BASE}/{PATH}"
+    headers = {"Content-Type":"application/json",
+        "authorization": f"Bearer {ACCESS_TOKEN}",
+        "appKey":APP_KEY,
+        "appSecret":APP_SECRET,
+        "tr_id":"FHKST01010400"}
+    params = {
+    "fid_cond_mrkt_div_code":"J",
+    "fid_input_iscd":code,
+    "fid_org_adj_prc":"1",
+    "fid_period_div_code":"D"
+    }
+    res = requests.get(URL, headers=headers, params=params)
+    stck_clpr = int(res.json()['output'][1]['stck_clpr']) #전일 종가
+    target_price = stck_clpr
+    return target_price
 
 def get_stock_balance():
     """주식 잔고조회"""
@@ -196,7 +212,7 @@ def get_stock_balance():
         "authorization":f"Bearer {ACCESS_TOKEN}",
         "appKey":APP_KEY,
         "appSecret":APP_SECRET,
-        "tr_id":"TTTC8434R",
+        "tr_id":"VTTC8434R",  # 실전 투자 "TTTC8434R"
         "custtype":"P",
     }
     params = {
@@ -219,7 +235,7 @@ def get_stock_balance():
     send_message(f"====주식 보유잔고====")
     for stock in stock_list:
         if int(stock['hldg_qty']) > 0:
-            stock_dict[stock['pdno']] = [stock['hldg_qty'], stock['EVLU_ERNG_RT']] # 0: 보유 수량, 1: 평가수익율
+            stock_dict[stock['pdno']] = [stock['hldg_qty'], stock['evlu_erng_rt']] # 0: 보유 수량, 1: 평가수익율
             send_message(f"{stock['prdt_name']}({stock['pdno']}): {stock['hldg_qty']}주")
             time.sleep(0.1)
     send_message(f"주식 평가 금액: {evaluation[0]['scts_evlu_amt']}원")
@@ -239,7 +255,7 @@ def get_balance():
         "authorization":f"Bearer {ACCESS_TOKEN}",
         "appKey":APP_KEY,
         "appSecret":APP_SECRET,
-        "tr_id":"TTTC8908R",
+        "tr_id":"VTTC8908R", # 실전 투자 : "TTTC8908R"
         "custtype":"P",
     }
     params = {
@@ -272,7 +288,7 @@ def buy(code="005930", qty="1"):
         "authorization":f"Bearer {ACCESS_TOKEN}",
         "appKey":APP_KEY,
         "appSecret":APP_SECRET,
-        "tr_id":"TTTC0802U",
+        "tr_id":"VTTC0802U",  # 실전 투자 : "TTTC0802U"
         "custtype":"P",
         "hashkey" : hashkey(data)
     }
@@ -300,7 +316,7 @@ def sell(code="005930", qty="1"):
         "authorization":f"Bearer {ACCESS_TOKEN}",
         "appKey":APP_KEY,
         "appSecret":APP_SECRET,
-        "tr_id":"TTTC0801U",
+        "tr_id":"VTTC0801U", # 실전 투자 : TTTC0801U
         "custtype":"P",
         "hashkey" : hashkey(data)
     }
@@ -315,16 +331,15 @@ def sell(code="005930", qty="1"):
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
-
     symbol_list = ["005930","035720","000660","069500"] # 매수 희망 종목 리스트
     bought_list = [] # 매수 완료된 종목 리스트
     total_cash = get_balance() # 보유 현금 조회
     stock_dict = get_stock_balance() # 보유 주식 조회
     for sym in stock_dict.keys():
         bought_list.append(sym)
-    target_buy_count = 5 # 매수할 종목 수
+    target_buy_count = 4 # 매수할 종목 수
     buy_percent = 0.33 # 종목당 매수 금액 비율
-    buy_amount = total_cash * buy_percent  # 종목별 주문 금액 계산
+    buy_amount = total_cash* 0.5 * buy_percent  # 종목별 주문 금액 계산
     soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
@@ -348,7 +363,7 @@ try:
                         continue
                     target_price = get_target_price(sym) # 전날 종가, Get from Input dictionary
                     current_price = get_current_price(sym)
-                    if target_price < current_price < target_price * 1.05: # Max: 5% 상승 가격, Min: 전날 종가
+                    if target_price * 0.5 < current_price < target_price * 1.5: # Max: 5% 상승 가격, Min: 전날 종가
                         buy_qty = 0  # 매수할 수량 초기화
                         buy_qty = int(buy_amount // current_price)
                         if buy_qty > 0:
@@ -362,12 +377,12 @@ try:
             # 매도 코드
             stock_dict = get_stock_balance()
             for sym, qty_rt in stock_dict.items(): # qty_rt / [0]: qty(보유수량), [1]: rt(평가수익율)
-                if float(qty_rt[1]) > 5.0 or float(qty_rt[1]) < -3.0 # 익절 라인은 dynamic 하게 바꿀 수 있다
+                if float(qty_rt[1]) > 0.1 or float(qty_rt[1]) < -0.1: # 익절 라인은 dynamic 하게 바꿀 수 있다
                     sell(sym, qty_rt[0])
 
             time.sleep(1)
 
-            if t_now.minute == 30 and t_now.second <= 5 # 매 30분 마다 코드가 잘 돌아가는 지 확인하는 코드
+            if t_now.minute == 30 and t_now.second <= 5: # 매 30분 마다 코드가 잘 돌아가는 지 확인하는 코드
                 get_stock_balance()
                 time.sleep(5)
 

@@ -24,9 +24,9 @@ import json
 # 다음 장에서 더 자세히 설명 드립니다. 
 # requests.get() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, params)
 
-URL_BASE = "https://openapi.koreainvestment.com:9443" # 실전 투자
+URL_BASE = "https://openapivts.koreainvestment.com:29443" # 모의 투자
 PATH = "uapi/domestic-stock/v1/quotations/inquire-price" # 현재가 조회를 위한 URL 경로
-URL = f"{URL_BASE}/{PATH}""
+URL = f"{URL_BASE}/{PATH}"
 code = "005930" # 삼성전자 종목 코드
 
 headers = {
@@ -56,7 +56,7 @@ print(int(res.json()['output']['stck_prpr']))
 # 다음 장에서 더 자세히 설명 드립니다. 
 # requests.post() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, data)
 
-URL_BASE = "https://openapi.koreainvestment.com:9443" # 실전 투자
+URL_BASE = "https://openapivts.koreainvestment.com:29443" # 모의 투자
 PATH = "uapi/domestic-stock/v1/trading/order-cash" # cash 주문
 URL = f"{URL_BASE}/{PATH}"
 code = "005930" # 삼성전자 종목 코드
@@ -72,7 +72,7 @@ headers = {"Content-Type":"application/json",
     "authorization":f"Bearer {ACCESS_TOKEN}", # 보안인증키
     "appKey":APP_KEY,  # API 신청으로 발금 받은 Key
     "appSecret":APP_SECRET, # API 신청으로 발금 받은 Secret
-    "tr_id":"TTTC0802U", # 매수 주문을 위한 id
+    "tr_id":"VTTC0802U", # 매수 주문을 위한 id
     "custtype":"P", # P: 개인 
     "hashkey" : hashkey(data)
 }
