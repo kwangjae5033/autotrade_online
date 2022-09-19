@@ -728,9 +728,9 @@ title="Print to PDF"
     <span class="n">stock_dict</span> <span class="o">=</span> <span class="n">get_stock_balance</span><span class="p">()</span> <span class="c1"># 보유 주식 조회</span>
     <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">stock_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">bought_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span>
-    <span class="n">target_buy_count</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># 매수할 종목 수</span>
-    <span class="n">buy_percent</span> <span class="o">=</span> <span class="mf">0.33</span> <span class="c1"># 종목당 매수 금액 비율</span>
-    <span class="n">buy_amount</span> <span class="o">=</span> <span class="n">total_cash</span><span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">buy_percent</span>  <span class="c1"># 종목별 주문 금액 계산</span>
+    <span class="n">target_buy_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbol_list</span><span class="p">)</span> <span class="c1"># 매수할 종목 수</span>
+    <span class="n">buy_percent</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">symbol_list</span><span class="p">)</span> <span class="c1"># 종목당 매수 금액 비율</span>
+    <span class="n">buy_amount</span> <span class="o">=</span> <span class="n">total_cash</span> <span class="o">*</span> <span class="n">buy_percent</span>  <span class="c1"># 종목별 주문 금액 계산</span>
     <span class="n">soldout</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;===국내 주식 자동매매 프로그램을 시작합니다===&quot;</span><span class="p">)</span>
@@ -754,7 +754,7 @@ title="Print to PDF"
                         <span class="k">continue</span>
                     <span class="n">target_price</span> <span class="o">=</span> <span class="n">get_target_price</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span> <span class="c1"># 전날 종가, Get from Input dictionary</span>
                     <span class="n">current_price</span> <span class="o">=</span> <span class="n">get_current_price</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">target_price</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">&lt;</span> <span class="n">current_price</span> <span class="o">&lt;</span> <span class="n">target_price</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">:</span> <span class="c1"># Max: 5% 상승 가격, Min: 전날 종가</span>
+                    <span class="k">if</span> <span class="n">target_price</span> <span class="o">&lt;=</span> <span class="n">current_price</span> <span class="o">&lt;</span> <span class="n">target_price</span> <span class="o">*</span> <span class="mf">1.05</span><span class="p">:</span> <span class="c1"># Max: 5% 상승 가격, Min: 전날 종가</span>
                         <span class="n">buy_qty</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 매수할 수량 초기화</span>
                         <span class="n">buy_qty</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">buy_amount</span> <span class="o">//</span> <span class="n">current_price</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">buy_qty</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -768,7 +768,7 @@ title="Print to PDF"
             <span class="c1"># 매도 코드</span>
             <span class="n">stock_dict</span> <span class="o">=</span> <span class="n">get_stock_balance</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">sym</span><span class="p">,</span> <span class="n">qty_rt</span> <span class="ow">in</span> <span class="n">stock_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="c1"># qty_rt / [0]: qty(보유수량), [1]: rt(평가수익율)</span>
-                <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">qty_rt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.1</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">qty_rt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">:</span> <span class="c1"># 익절 라인은 dynamic 하게 바꿀 수 있다</span>
+                <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">qty_rt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">qty_rt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span> <span class="c1"># 손익절 % 는 dynamic 하게 바꿀 수 있다</span>
                     <span class="n">sell</span><span class="p">(</span><span class="n">sym</span><span class="p">,</span> <span class="n">qty_rt</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>

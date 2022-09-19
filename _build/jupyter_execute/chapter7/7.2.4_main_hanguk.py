@@ -337,9 +337,9 @@ try:
     stock_dict = get_stock_balance() # 보유 주식 조회
     for sym in stock_dict.keys():
         bought_list.append(sym)
-    target_buy_count = 4 # 매수할 종목 수
-    buy_percent = 0.33 # 종목당 매수 금액 비율
-    buy_amount = total_cash* 0.5 * buy_percent  # 종목별 주문 금액 계산
+    target_buy_count = len(symbol_list) # 매수할 종목 수
+    buy_percent = 1/len(symbol_list) # 종목당 매수 금액 비율
+    buy_amount = total_cash * buy_percent  # 종목별 주문 금액 계산
     soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
@@ -363,7 +363,7 @@ try:
                         continue
                     target_price = get_target_price(sym) # 전날 종가, Get from Input dictionary
                     current_price = get_current_price(sym)
-                    if target_price * 0.5 < current_price < target_price * 1.5: # Max: 5% 상승 가격, Min: 전날 종가
+                    if target_price <= current_price < target_price * 1.05: # Max: 5% 상승 가격, Min: 전날 종가
                         buy_qty = 0  # 매수할 수량 초기화
                         buy_qty = int(buy_amount // current_price)
                         if buy_qty > 0:
@@ -377,7 +377,7 @@ try:
             # 매도 코드
             stock_dict = get_stock_balance()
             for sym, qty_rt in stock_dict.items(): # qty_rt / [0]: qty(보유수량), [1]: rt(평가수익율)
-                if float(qty_rt[1]) > 0.1 or float(qty_rt[1]) < -0.1: # 익절 라인은 dynamic 하게 바꿀 수 있다
+                if float(qty_rt[1]) > 5 or float(qty_rt[1]) < -3: # 손익절 % 는 dynamic 하게 바꿀 수 있다
                     sell(sym, qty_rt[0])
 
             time.sleep(1)
