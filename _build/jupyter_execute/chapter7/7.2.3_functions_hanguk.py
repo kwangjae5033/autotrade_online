@@ -7,15 +7,15 @@
 
 # 현재가 조회를 위해서 먼저 KIS Developers 홈페이지 > API 문서 >  국내주식시세 > 주식현재가 시세 (https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d) 페이지에 접속 하겠습니다.
 
-# ![get_current_price_1.png](attachment:e1b1ea4d-ad37-479d-9a4b-f3d65291b6ed.png)
+# ![GET_IMAGE](images/get_current_price_1.png)
 
 # 기본정보에서 GET 방식임을 확인 할 수 있고 LAYOUT 을 통해 Request 함수의 headers 및 params 파라미터의 인자 값들을 확인 할 수 있습니다.
 
-# ![get_current_price_2.png](attachment:6294ec11-331c-4c21-97ac-e5f43c014e2e.png)
+# ![GET_IMAGE](images/get_current_price_2.png)
 
 # 또한, 수신 받을 Response 객체의 형태도 미리 확인하여 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.
 
-# ![get_current_price_3.png](attachment:15cb6d7a-2c60-435f-9079-4297889fbf15.png)
+# ![GET_IMAGE](images/get_current_price_3.png)
 
 # Request 와 Response 문서를 참고하여 특정 종목의 현재가를 조회 하는 코드는 아래와 같습니다. 
 
@@ -44,7 +44,7 @@ def get_current_price(code="005930"):
 
 # 잔고 조회도 마찬가지로 KIS Developers 의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 > API 문서 >  국내주식주문 > 주식잔고조회 (https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_66c61080-674f-4c91-a0cc-db5e64e9a5e6) 페이지에 접속 하겠습니다.
 
-# ![get_stock_balance_1.png](attachment:70d9d407-b40d-4f10-a2b9-0ca35ebf1470.png)
+# ![GET_IMAGE](images/get_stock_balance_1.png)
 
 # 앞 절의 현재가 조회와 마찬가지로 LAYOUT의 Request 문서를 참고하여 headers 및 params 파라미터의 인자 값들을 확인 할 수 있습니다.
 # Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.
@@ -100,7 +100,7 @@ def get_stock_balance():
 
 # 잔여 현금 조회도 마찬가지로 KIS Developers 의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 > API 문서 >  국내주식주문 > 매수가능조회 (https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb) 페이지에 접속 하겠습니다.
 
-# ![get_balance_1.png](attachment:39ac16ec-2de6-4af5-b5d0-be9c270741de.png)
+# ![GET_IMAGE](images/get_balance_1.png)
 
 # 앞 절의 잔여 현금  조회와 마찬가지로 LAYOUT의 Request 문서를 참고하여 headers 및 params 파라미터의 인자 값들을 확인 할 수 있습니다.
 # Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.
@@ -138,7 +138,7 @@ def get_balance():
 
 # 매수 주문도 마찬가지로 KIS Developers 의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 > API 문서 >  국내주식주문 > 주식주문(현금) (https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb) 페이지에 접속 하겠습니다.
 
-# ![buy_1.png](attachment:6dfda364-ee80-4a26-84a3-e3fb02943a59.png)
+# ![GET_IMAGE](images/buy_1.png)
 
 # 앞의 조회 요청들과 달리 주문 요청은 기본정보에서 POST 방식임을 확인 할 수 있고 보안을 위해서 headers 에 hashkey 값을 입력 해줍니다.
 
