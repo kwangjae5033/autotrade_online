@@ -118,13 +118,31 @@ if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
 # In[ ]:
 
 
+f = open("select_dict.pkl","rb")
+select_dict = pickle.load(f)
+f.close()
+
+
+# In[ ]:
+
+
+select_dict
+
+
+# In[ ]:
+
+
 import requests
 import json
 import datetime
 import time
 import yaml
+import pickle
+import pandas as pd
+from pathlib import Path
+from os import path
 
-with open('config.yaml', encoding='UTF-8') as f:
+with open('C:/Users/kimkwa/Documents/auto/config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 APP_KEY = _cfg['APP_KEY']
 APP_SECRET = _cfg['APP_SECRET']
@@ -133,6 +151,10 @@ CANO = _cfg['CANO']
 ACNT_PRDT_CD = _cfg['ACNT_PRDT_CD']
 DISCORD_WEBHOOK_URL = _cfg['DISCORD_WEBHOOK_URL']
 URL_BASE = _cfg['URL_BASE']
+
+f = open("select_dict.pkl","rb")
+select_dict = pickle.load(f)
+f.close()
 
 # Input Dict 로 엑셀 파일 만들기
 
@@ -184,25 +206,50 @@ def get_current_price(code="005930"):
     res = requests.get(URL, headers=headers, params=params)
     return int(res.json()['output']['stck_prpr'])
 
-def get_target_price(code="005930"):
-    """전날 종가 조회"""
-    PATH = "uapi/domestic-stock/v1/quotations/inquire-daily-price"
-    URL = f"{URL_BASE}/{PATH}"
-    headers = {"Content-Type":"application/json",
-        "authorization": f"Bearer {ACCESS_TOKEN}",
-        "appKey":APP_KEY,
-        "appSecret":APP_SECRET,
-        "tr_id":"FHKST01010400"}
-    params = {
-    "fid_cond_mrkt_div_code":"J",
-    "fid_input_iscd":code,
-    "fid_org_adj_prc":"1",
-    "fid_period_div_code":"D"
-    }
-    res = requests.get(URL, headers=headers, params=params)
-    stck_clpr = int(res.json()['output'][1]['stck_clpr']) #전일 종가
-    target_price = stck_clpr
-    return target_price
+def get_stock_5d_before():
+    def get_stock_before(date):
+        PATH = "uapi/domestic-stock/v1/trading/inquire-daily-ccld"
+        URL = f"{URL_BASE}/{PATH}"
+        headers = {"Content-Type":"application/json",
+            "authorization":f"Bearer {ACCESS_TOKEN}",
+            "appKey":APP_KEY,
+            "appSecret":APP_SECRET,
+            "tr_id":"VTTC8001R",  # 실전 투자 "TTTC8001R"
+            "custtype":"P",
+        }
+        params = {
+            "CANO": CANO,
+            "ACNT_PRDT_CD": ACNT_PRDT_CD,
+            "INQR_STRT_DT": date,
+            "INQR_END_DT": date,
+            "SLL_BUY_DVSN_CD": "02", # 00:전체, 01:매도, 02:매수
+            "INQR_DVSN": "01", # 00: 역순
+            "PDNO": "", 
+            "CCLD_DVSN": "01",
+            "ORD_GNO_BRNO":"",
+            "ODNO":"",
+            "INQR_DVSN_3": "01",
+            "INQR_DVSN_1": "",
+            "CTX_AREA_FK100": "",
+            "CTX_AREA_NK100": ""
+        }
+        res = requests.get(URL, headers=headers, params=params)
+        stock_dict = res.json()['output1']
+        return stock_dict
+    prev = 7
+    while prev < 15:
+        t_previous_5d = datetime.datetime.now().date() - datetime.timedelta(days=prev)
+        t_previous_5d = t_previous_5d.strftime("%Y%m%d")
+        bought_previous_5d_dict = get_stock_before(t_previous_5d)
+        if len(bought_previous_5d_dict) > 0:
+            break
+        else:
+            prev += 1
+    sell_list_5d_over = []
+    for stock in bought_previous_5d_dict:
+        sell_list_5d_over.append(stock['pdno'])
+    sell_list_5d_over = list(set(sell_list_5d_over))
+    return sell_list_5d_over
 
 def get_stock_balance():
     """주식 잔고조회"""
@@ -235,8 +282,8 @@ def get_stock_balance():
     send_message(f"====주식 보유잔고====")
     for stock in stock_list:
         if int(stock['hldg_qty']) > 0:
-            stock_dict[stock['pdno']] = [stock['hldg_qty'], stock['evlu_erng_rt']] # 0: 보유 수량, 1: 평가수익율
-            send_message(f"{stock['prdt_name']}({stock['pdno']}): {stock['hldg_qty']}주")
+            stock_dict[stock['pdno']] = [stock['hldg_qty'], stock['evlu_pfls_rt']] # 0: 보유 수량, 1: 평가손익율
+            send_message(f"{stock['prdt_name']}({stock['pdno']}): {stock['hldg_qty']}주 {stock['evlu_pfls_rt']}")
             time.sleep(0.1)
     send_message(f"주식 평가 금액: {evaluation[0]['scts_evlu_amt']}원")
     time.sleep(0.1)
@@ -331,22 +378,24 @@ def sell(code="005930", qty="1"):
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
-    symbol_list = ["005930","035720","000660","069500"] # 매수 희망 종목 리스트
     bought_list = [] # 매수 완료된 종목 리스트
-    total_cash = get_balance() # 보유 현금 조회
-    stock_dict = get_stock_balance() # 보유 주식 조회
-    for sym in stock_dict.keys():
-        bought_list.append(sym)
-    target_buy_count = len(symbol_list) # 매수할 종목 수
-    buy_percent = 1/len(symbol_list) # 종목당 매수 금액 비율
+    balance_dict = get_stock_balance() # 보유 주식 조회
+    for sym in select_dict.keys():
+        if sym in balance_dict.keys():
+            bought_list.append(sym)
+    for sym in bought_list:
+        if sym in select_dict.keys():
+            del select_dict[sym]
+            
+    total_cash = get_balance() # 보유 현금 조회        
+    target_buy_count = len(select_dict.keys()) # 매수할 종목 수
+    buy_percent = 1/target_buy_count # 종목당 매수 금액 비율
     buy_amount = total_cash * buy_percent  # 종목별 주문 금액 계산
-    soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
     while True:
         t_now = datetime.datetime.now()
-        t_9 = t_now.replace(hour=9, minute=0, second=0, microsecond=0)
-        t_start = t_now.replace(hour=9, minute=5, second=0, microsecond=0)
+        t_start = t_now.replace(hour=8, minute=59, second=59, microsecond=0)
         t_sell = t_now.replace(hour=15, minute=15, second=0, microsecond=0)
         t_exit = t_now.replace(hour=15, minute=20, second=0,microsecond=0)
         today = datetime.datetime.today().weekday()
@@ -355,50 +404,48 @@ try:
             send_message("주말이므로 프로그램을 종료합니다.")
             break
 
-        if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15
+        if t_start < t_now < t_exit :  # AM 09:00 ~ PM 03:15
             # 매수 코드
-            for sym in symbol_list:
+            for sym, name_n_target_price_list in select_dict.items():
                 if len(bought_list) < target_buy_count:
                     if sym in bought_list:
                         continue
-                    target_price = get_target_price(sym) # 전날 종가, Get from Input dictionary
+                    target_price = name_n_target_price_list[1] # 전날 종가
                     current_price = get_current_price(sym)
                     if target_price <= current_price < target_price * 1.05: # Max: 5% 상승 가격, Min: 전날 종가
                         buy_qty = 0  # 매수할 수량 초기화
                         buy_qty = int(buy_amount // current_price)
                         if buy_qty > 0:
-                            send_message(f"{sym} 목표가 달성({target_price} < {current_price}) 매수를 시도합니다.")
+                            send_message(f"{name_n_target_price_list[0]} 목표가 달성({current_price}) 매수를 시도합니다.")
                             result = buy(sym, buy_qty)
                             if result:
                                 soldout = False
                                 bought_list.append(sym)
                                 get_stock_balance()
                     time.sleep(1)
+            
             # 매도 코드
-            stock_dict = get_stock_balance()
-            for sym, qty_rt in stock_dict.items(): # qty_rt / [0]: qty(보유수량), [1]: rt(평가수익율)
-                if float(qty_rt[1]) > 5 or float(qty_rt[1]) < -3: # 손익절 % 는 dynamic 하게 바꿀 수 있다
+            balance_dict = get_stock_balance()
+            for sym, qty_rt in balance_dict.items(): # qty_rt / [0]: qty(보유수량), [1]: rt(평가손익율)
+                if float(qty_rt[1]) > 5.0 or float(qty_rt[1]) < -3.0: # 익절 라인은 dynamic 하게 바꿀 수 있다
                     sell(sym, qty_rt[0])
-
             time.sleep(1)
 
-            if t_now.minute == 30 and t_now.second <= 5: # 매 30분 마다 코드가 잘 돌아가는 지 확인하는 코드
-                get_stock_balance()
-                time.sleep(5)
-
         if t_sell < t_now < t_exit:  # PM 03:15 ~ PM 03:20 : 5th Day 를 맞이한 종목들 일괄 매도
-            if soldout == False:
-                stock_dict = get_stock_balance()
-                for sym, qty_rt in stock_dict.items():
+            sell_list_5d_over = get_stock_5d_before()
+            
+            balance_dict = get_stock_balance()
+            for sym, qty_rt in balance_dict.items():
+                if sym in sell_list_5d_over:
+                    send_message(f"5일된 종목 {sym}을 전량 매도 합니다.")
                     sell(sym, qty_rt[0])
-                soldout = True
-                bought_list = []
-                time.sleep(1)
-
+            
+            time.sleep(1)
+            
         if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
             send_message("프로그램을 종료합니다.")
             break
-
+        
 except Exception as e:
     send_message(f"[오류 발생]{e}")
     time.sleep(1)
