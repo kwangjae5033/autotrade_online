@@ -3,8 +3,6 @@
 
 # # 자동매매 로직 이해하기
 
-# ![GET_IMAGE](images/hanguk_logic.png)
-
 # 자동매매 코드는 다음과 같이 크게 네 파트로 구분되어 있습니다.
 
 # 1. 장 전 
@@ -114,6 +112,8 @@ if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
 # 코드 완성 및 설명 필요
 
 # 전체 코드는 아래와 같습니다.
+
+# ![GET_IMAGE](images/hanguk_logic.png)
 
 # In[ ]:
 
