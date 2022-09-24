@@ -386,7 +386,7 @@ title="Print to PDF"
                 
   <section id="id1">
 <h1>서비스 연결<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<p>API 요청을 하기 위해 requests 와 json 패키지를 불러줍니다. requests 패키지는 HTTP 요청을 보낼 때, json 은 수신 받은 객체를 JSON 데이터로 만들어서 쓰기 위해 활용되는 모듈입니다. JSON 데이터는 pandas 데이터프레임으로 변환하기 쉬운 이점도 있습니다.</p>
+<p>API 요청을 위해 “requests” 와 “json” 패키지가 필요합니다. “requests” 패키지는 HTTP 요청을 보낼 때, “json” 은 수신 받은 객체를 JSON 데이터로 만들어서 쓰기 위해 활용되는 패키지입니다. JSON 데이터는 pandas 데이터프레임으로 변환하기 쉬운 이점도 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span> 
@@ -395,31 +395,33 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>requests는 크게 GET 방식과 POST 방식이 있습니다. GET 방식은 현재가 혹은 주식 잔고조회 같은 요청에서 쓰이고, POST 방식은 주로 주문/정정/취소 요청에서 쓰입니다.</p>
+<p>requests는 크게 GET과 POST 방식이 있습니다. GET 방식은 현재가 혹은 주식 잔고 조회 같은 요청에서 쓰이고, POST 방식은 주로 주문/정정/취소 요청에서 쓰입니다. 아래 코드 셀은 GET 방식의 예제입니다. GET 방식의 주요 구성 요소는 URL, headers, 그리고 params입니다. 먼저 URL은 실전 또는 모의 투자에서 조회하고 싶은 요청의 경로 정보를 담고 있습니다. 다음으로 headers는 수신 데이터의 형태 및 요청자를 식별할 수 있는 인증 정보를 담고 있습니다. 마지막으로 params는 조회하고자 하는 시장(주식, ETF, ETN) 과 종목 코드 정보를 담고 있습니다. 각 구성 요소에서 어떤 구분자를 입력해야 하는지는 KIS Developers의 API 문서에 자세히 나와 있습니다. API 문서의 활용 방법은 주요 사용 함수를 정리하는 절에서 함께 들여다볼 계획입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;주식 종목 현재가 조회&quot;&quot;&quot;</span>
 
-<span class="c1"># 다음 장에서 더 자세히 설명 드립니다. </span>
-<span class="c1"># requests.get() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, params)</span>
-
+<span class="c1"># URL 설정</span>
 <span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapivts.koreainvestment.com:29443&quot;</span> <span class="c1"># 모의 투자</span>
 <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/quotations/inquire-price&quot;</span> <span class="c1"># 현재가 조회를 위한 URL 경로</span>
 <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;005930&quot;</span> <span class="c1"># 삼성전자 종목 코드</span>
 
+<span class="c1"># headers 설정</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
     <span class="s2">&quot;authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="c1"># 보안인증키</span>
     <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Key</span>
     <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Secret</span>
-    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;FHKST01010100&quot;</span> <span class="c1"># 현재가 조회를 위한 id</span>
+    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;FHKST01010100&quot;</span> <span class="c1"># 현재가 조회를 위한 거래ID </span>
 <span class="p">}</span>
+
+<span class="c1"># params 설정</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;fid_cond_mrkt_div_code&quot;</span><span class="p">:</span><span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="c1"># J: 주식</span>
     <span class="s2">&quot;fid_input_iscd&quot;</span><span class="p">:</span><span class="n">code</span><span class="p">,</span> <span class="c1"># 조회 하고 싶은 주식 종목의 코드 ex) 삼성전자: 005930</span>
 <span class="p">}</span>
 
+<span class="c1"># GET request 함수 호출</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output&#39;</span><span class="p">][</span><span class="s1">&#39;stck_prpr&#39;</span><span class="p">]))</span>
@@ -427,18 +429,18 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>상대적으로 보안이 중요한 POST 는 hashkey 를 활용해 암호화를 진행합니다.</p>
+<p>GET 방식과 마찬가지로 POST 방식에서도 URL에 주문하고자 하는 경로 값을 설정해 줍니다. 주문 관련 요청이 있기 때문에 headers에는 hashkey(암호화) 값을 추가하여 보안 수준을 높여 줍니다. 또한, 매수/매도를 구분하는 거래ID 값을 headers에 추가해 줍니다. 마지막으로 data에 주문 요청을 처리할 수 있는 계좌번호, 매수/매도 수량 그리고 주문가격 정보들을 담아 줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;주식 시장가 매수&quot;&quot;&quot;</span>
 
-<span class="c1"># 다음 장에서 더 자세히 설명 드립니다. </span>
-<span class="c1"># requests.post() 함수의 구성 요소를 집중적으로 봐주세요 (e.g. URL, headers, data)</span>
-
+<span class="c1"># URL 설정</span>
 <span class="n">URL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openapivts.koreainvestment.com:29443&quot;</span> <span class="c1"># 모의 투자</span>
 <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/trading/order-cash&quot;</span> <span class="c1"># cash 주문</span>
 <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;005930&quot;</span> <span class="c1"># 삼성전자 종목 코드</span>
+
+<span class="c1"># data 설정</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;CANO&quot;</span><span class="p">:</span> <span class="n">CANO</span><span class="p">,</span> <span class="c1"># 계좌번호 앞자리</span>
     <span class="s2">&quot;ACNT_PRDT_CD&quot;</span><span class="p">:</span> <span class="n">ACNT_PRDT_CD</span><span class="p">,</span>  <span class="c1"># 계좌번호 뒷자리</span>
@@ -447,21 +449,24 @@ title="Print to PDF"
     <span class="s2">&quot;ORD_QTY&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">qty</span><span class="p">)),</span> <span class="c1"># 매수 주문 수량</span>
     <span class="s2">&quot;ORD_UNPR&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="c1"># 시장가로 매수 시, ORD_UNPR 는 0 (지정가로 매수 시, ORD_UNPR 는 원하는 지정가로 명시) </span>
 <span class="p">}</span>
+
+<span class="c1"># headers 설정</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
     <span class="s2">&quot;authorization&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="c1"># 보안인증키</span>
     <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>  <span class="c1"># API 신청으로 발금 받은 Key</span>
     <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span> <span class="c1"># API 신청으로 발금 받은 Secret</span>
-    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;VTTC0802U&quot;</span><span class="p">,</span> <span class="c1"># 매수 주문을 위한 id</span>
+    <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;VTTC0802U&quot;</span><span class="p">,</span> <span class="c1"># 매수 주문을 위한 거래ID</span>
     <span class="s2">&quot;custtype&quot;</span><span class="p">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="c1"># P: 개인 </span>
     <span class="s2">&quot;hashkey&quot;</span> <span class="p">:</span> <span class="n">hashkey</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
 <span class="p">}</span>
 
+<span class="c1"># POST request 함수 호출</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>해쉬키 함수는 다음과 같이 정의 되어 있습니다.</p>
+<p>한편, 해쉬키 함수는 다음과 같이 정의 되어 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hashkey</span><span class="p">(</span><span class="n">datas</span><span class="p">):</span>
@@ -498,7 +503,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>현재가 조회와 매수 주문 코드 예제를 보면서 GET 과 POST 호출 방식의 비슷한 점들을 발견하셨을 겁니다. requests.get() 과 reqeusts.post() 모두 URL, headers, 그리고 params 혹은 data 파라미터가 필요합니다. 결국은 요청의 목적에 따라서 URL 의 PATH 변수, headers 딕셔너리의 key 값, 그리고 params 혹은 data 딕셔너리의 key 값들을 교체 해주면 요청 작업을 진행 할 수 있습니다. 요청에 따른 인자 값 변경은 KIS developers 홈페이지에서 (<a class="reference external" href="https://apiportal.koreainvestment.com/">https://apiportal.koreainvestment.com/</a>) 더 자세한 정보를 확인할 수 있습니다. 한편, headers 와 data 에서 반복적으로 사용되는 개인 정보들은 config.yaml 파일에 일괄적으로 저장 해두면 훨씬 더 간결한 코드를 작성 하실 수 있습니다.</p>
+<p>끝으로 headers와 data 설정에서 반복적으로 사용되는 개인 정보들은 config.yaml 파일에 일괄적으로 저장해 두면 더 간편하게 개인정보를 관리할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;config.yaml 파일 생성&quot;&quot;&quot;</span>
