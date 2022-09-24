@@ -15,105 +15,207 @@
 # 4. 장 후
 #     * 매수 종목 코드 및 날짜 저장 (csv 파일)
 
-# 먼저 장 전, 필요 변수를 선언하고 준비하는 코드를 보겠습니다.
+# 먼저 장이 시작하기 전, 필요 변수를 선언하는 코드를 살펴보겠습니다. config.yaml 파일에 저장해 두었던 개인 정보를 불러오고, get_access_token() 함수를 통해 보안인증 토큰을 생성합니다.
 
 # In[ ]:
 
 
-"""장 전, 필요 변수 준비"""
+"""장 전, 개인 정보 준비"""
 
-ACCESS_TOKEN = get_access_token() # 본안인증 토큰 받기
+# config.yaml 파일에 저장해 두었던 개인 정보 불러오기
+with open('C:/Users/kimkwa/Documents/auto/config.yaml', encoding='UTF-8') as f:
+    _cfg = yaml.load(f, Loader=yaml.FullLoader)
+APP_KEY = _cfg['APP_KEY']
+APP_SECRET = _cfg['APP_SECRET']
+ACCESS_TOKEN = ""
+CANO = _cfg['CANO']
+ACNT_PRDT_CD = _cfg['ACNT_PRDT_CD']
+DISCORD_WEBHOOK_URL = _cfg['DISCORD_WEBHOOK_URL']
+URL_BASE = _cfg['URL_BASE']
 
-symbol_list = ["005930","035720","000660","069500"] # 매수 희망 종목 리스트
-bought_list = [] # 매수 완료된 종목 리스트
-total_cash = get_balance() # 보유 현금 조회
-stock_dict = get_stock_balance() # 보유 주식 조회
-for sym in stock_dict.keys():
-    bought_list.append(sym)
-target_buy_count = 5 # 매수할 종목 수
-buy_percent = 0.33 # 종목당 매수 금액 비율
-buy_amount = total_cash * buy_percent  # 종목별 주문 금액 계산
-soldout = False
-
-send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
-
-
-# API 요청을 위해 보안인증 토큰을 생성하고, 매수를 위한 매수 희망 종목과 보유 중인 주식을 담을 리스트 변수를 선언 합니다. 또한, buy_percent 와 total_cash 를 통해 종목별 주문 금액 buy_amount 를 계산 합니다.
-
-# In[ ]:
+# 본안인증 토큰 받기
+ACCESS_TOKEN = get_access_token()
 
 
-"""장 중, 매수/매도"""
-
-if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15
-    # 매수 코드
-    for sym in symbol_list:
-        if len(bought_list) < target_buy_count: # 추천종목을 모두 매수 했을 경우 매도 코드로 넘어 간다
-            if sym in bought_list:
-                continue
-            target_price = # 전날 종가, Get from Input dictionary
-            current_price = get_current_price(sym)
-            if target_price < current_price < target_price * 1.05: # Max: 5% 상승 가격, Min: 전날 종가
-                buy_qty = 0  # 매수할 수량 초기화
-                buy_qty = int(buy_amount // current_price) # 매수 수량 계산
-                if buy_qty > 0:
-                    send_message(f"{sym} 목표가 달성({target_price} < {current_price}) 매수를 시도합니다.")
-                    result = buy(sym, buy_qty)
-                    if result: # 매수 성공 시, bought_list 에 해당 sym 추가
-                        soldout = False
-                        bought_list.append(sym)
-                        get_stock_balance()
-            time.sleep(1)
-    # 매도 코드
-    stock_dict = get_stock_balance() # 계좌 잔고 조회
-    for sym, qty_rt in stock_dict.items(): # qty_rt / [0]: qty(보유수량), [1]: rt(평가수익율)
-        if float(qty_rt[1]) > 5.0 or float(qty_rt[1]) < -3.0 # 익절 라인은 dynamic 하게 바꿀 수 있다
-            sell(sym, qty_rt[0])
-
-    time.sleep(1)
-
-    if t_now.minute == 30 and t_now.second <= 5 # 매 30분 마다 코드가 잘 돌아가는 지 확인하는 코드
-        get_stock_balance()
-        time.sleep(5)
-
-
-# 장이 시작되고, 추천 종목 매수를 먼저 시도 합니다. 추천 종목의 현재가격이 목표가격 범위에 들어오면 매수 수량을 계산하고 매수를 시도합니다. Discord 를 통해 매수 시도 알림을 보내고, 매수 성공 시, bought_list 에 해당 종목을 추가 합니다.
-# 매도 코드는 매수 코드 보다 더 간단 합니다. 계좌 잔고 조회를 통해서 보유 종목의 평가수익률이 목표하는 익절 혹은 손절라인을 넘어갈 때 매도를 시도 합니다.
+# 이어서 추천 종목이 들어 있는 "select_dict.pkl" 피클 파일을 불러오고, 매수 주문이 완료된 종목을 담아놓을 bought_list 변수를 선언합니다. 그다음, 잔고 조회 함수를 호출해서 보유 주식 정보를 balance_dict 변수에 저장합니다. 만약 추천종목 중에 보유 중인 종목이 있다면 매수하지 않기 위해서 bought_list 변수에 추가시키고, 추천 종목 딕셔너리 변수 selec_dict에서 해당 종목을 제외합니다.
 
 # In[ ]:
 
 
-"""장 종료 전, 보유 종목 중, 5th 영업일 지난 종목 일괄 매도"""
+"""장 전, 매수/매도 관련 변수 선언"""
 
-if t_sell < t_now < t_exit:  # PM 03:15 ~ PM 03:20 : 5th Day 를 맞이한 종목들 일괄 매도
-    if soldout == False:
-        stock_dict = get_stock_balance()
-        for sym, qty_rt in stock_dict.items():
-            sell(sym, qty_rt[0])
-        soldout = True
-        bought_list = []
+# 추천 종목 딕셔너리 불러오기
+f = open("select_dict.pkl","rb")
+select_dict = pickle.load(f)
+f.close()
+
+# 매수 완료된 종목 리스트
+bought_list = [] 
+
+# 보유 주식 조회
+balance_dict = get_stock_balance()
+
+# 보유 중인 추천 종목을 매수 완료된 종목 리스트로 추가
+for sym in select_dict.keys():
+    if sym in balance_dict.keys():
+        bought_list.append(sym)
+        
+# 보유 중인 추천 종목을 매수하지 않기 위해서 매수 딕셔너리에서 제외
+for sym in bought_list:
+    if sym in select_dict.keys():
+        del select_dict[sym]
+
+
+# 마지막으로 매수 가능한 보유 현금을 total_cash 변수에 저장하고, 매수해야 하는 종목 수를 total_buy_count에 저장합니다. 종목 당 매수 금액 비율을 산출하여 buy_percent에 저장하고, 선언된 total_cash와 buy_percent를 통해 종목별 주문 가능 금액을 buy_amount에 저장합니다.
+
+# In[ ]:
+
+
+"""장 전, 매수 금액 준비"""
+
+# 보유 현금 조회 
+total_cash = get_balance()
+# 매수할 종목 수
+target_buy_count = len(select_dict.keys()) 
+# 종목당 매수 금액 비율
+buy_percent = 1/target_buy_count
+# 종목별 주문 가능 금액 계산
+buy_amount = total_cash * buy_percent  
+
+
+# 다음으로 장이 시작하는 시간과 끝나는 시간을 t_start와 t_exit에 저장합니다. 5일 이상 보유했던 종목을 장이 끝나기 5 분 전에 전량 매도하기 위해서 t_sell에 해당 시간을 저장 했습니다. 그리고 주말이면 자동매매 코드를 돌리지 않기 위해서 현재 요일 정보를 today 변수에 저장합니다.    
+
+# In[ ]:
+
+
+"""장 중, 시간 변수 준비"""
+
+while True:
+        t_now = datetime.datetime.now() # 현재 시간
+        t_start = t_now.replace(hour=9, minute=0, second=0, microsecond=0)
+        t_sell = t_now.replace(hour=15, minute=15, second=0, microsecond=0)
+        t_exit = t_now.replace(hour=15, minute=20, second=0,microsecond=0)
+        today = datetime.datetime.today().weekday()
+
+        if today == 5 or today == 6:  # 토요일이나 일요일이면 자동 종료
+            send_message("주말이므로 프로그램을 종료합니다.")
+            break
+
+
+# 장이 시작되고, 추천 종목 매수를 먼저 시도 합니다. 추천 종목의 현재가격이 목표가격 범위에 들어오면 매수 가능 수량을 계산하고 매수를 시도합니다. Discord 를 통해 매수 시도 알림을 보내고, 매수 성공 시, bought_list 에 해당 종목을 추가 합니다.
+
+# In[ ]:
+
+
+"""장 중, 매수"""
+
+while True:
+    
+    # 시간 변수 준비 코드 생략" 
+    
+    if t_start < t_now < t_sell :  # AM 09:00 ~ PM 03:15
+        # 매수 코드
+        for sym, name_n_target_price_list in select_dict.items():
+            if len(bought_list) < target_buy_count:
+                if sym in bought_list:
+                    continue
+                target_price = name_n_target_price_list[1] # 전날 종가
+                current_price = get_current_price(sym)
+                if target_price <= current_price < target_price * 1.05: # Max: 5% 상승 가격, Min: 전날 종가
+                    buy_qty = 0  # 매수할 수량 초기화
+                    buy_qty = int(buy_amount // current_price)
+                    if buy_qty > 0:
+                        send_message(f"{name_n_target_price_list[0]} 목표가 달성({current_price}) 매수를 시도합니다.")
+                        result = buy(sym, buy_qty)
+                        if result:
+                            soldout = False
+                            bought_list.append(sym)
+                            get_stock_balance()
+                time.sleep(1)
+
+
+# 매도 코드는 매수 코드 보다 더 간단 합니다. 계좌 잔고 조회를 통해서 보유 중인 종목의 평가수익률이 목표하는 익절 혹은 손절라인을 넘어갈 때 매도를 시도 합니다.
+
+# In[ ]:
+
+
+"""장 중, 매도"""
+
+while True:
+    
+    # 시간 변수 준비 코드 생략
+    
+    if t_start < t_now < t_sell :  # AM 09:00 ~ PM 03:15
+        
+        # 매수 코드 생략
+    
+        # 매도 코드
+        balance_dict = get_stock_balance()
+        for sym, qty_rt in balance_dict.items(): # qty_rt / [0]: qty(보유수량), [1]: rt(평가손익율)
+            if float(qty_rt[1]) > 5.0 or float(qty_rt[1]) < -3.0: # 익절 라인은 dynamic 하게 바꿀 수 있다
+                sell(sym, qty_rt[0])
         time.sleep(1)
 
 
-# 코드 완성 및 설명 필요
+# 이전 장들에서 구현한 모델의 평가 기준이 5 영업일 뒤의 수익율이었기 때문에 장 종료 5분 전, 5 영업일 지난 보유 종목을 일괄 매도 합니다.
 
 # In[ ]:
 
 
-"""장 후, 매수 종목 코드 및 날짜 저장 (csv 파일)"""
+"""장 종료 5분 전, 5 영업일 지난 보유 종목 일괄 매도"""
 
-if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
-    ######################
+while True:
     
-    send_message("프로그램을 종료합니다.")
-    break
+    # 시간 변수 준비 코드 생략
+    
+    if t_start < t_now < t_sell :  # AM 09:00 ~ PM 03:15
+        
+        # 매수 코드 생략
+    
+        # 매도 코드 생략
+        
+    if t_sell < t_now < t_exit:  # PM 03:15 ~ PM 03:20 : 5 영업일 지난 종목들 일괄 매도
+        send_message(f"5일된 종목을 전량 매도 합니다.")
+        sell_list_5d_over = get_stock_5d_before()
+            
+        balance_dict = get_stock_balance()
+        for sym, qty_rt in balance_dict.items():
+            if sym in sell_list_5d_over:
+                sell(sym, qty_rt[0])
+                
+        time.sleep(1)
 
 
-# 코드 완성 및 설명 필요
+# 장 후, 프로그램을 종료합니다.
 
-# 전체 코드는 아래와 같습니다.
+# In[ ]:
+
+
+"""장 후, 프로그램 종료"""
+
+while True:
+    
+    # 시간 변수 준비 코드 생략
+    
+    if t_start < t_now < t_sell :  # AM 09:00 ~ PM 03:15
+        
+        # 매수 코드 생략
+    
+        # 매도 코드 생략
+    if t_sell < t_now < t_exit: # PM 03:15 ~ PM 03:20 
+        
+        # 5 영업일 지난 종목들 일괄 매도
+
+    if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
+        print("프로그램을 종료합니다.")
+        break
+
+
+# 전체 코드의 로직을 볼 수 잇는 플로우 차트는 아래와 같습니다.
 
 # ![GET_IMAGE](images/hanguk_logic.png)
+
+# Jupyter 환경에서 ipynb 파일로 전체 코드를 아래와 같이 순서대로 실행해 볼 수 있습니다.
 
 # In[ ]:
 

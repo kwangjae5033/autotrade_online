@@ -399,11 +399,16 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id5">
-   매수
+   5일 이상 보유 종목 조회
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
+   매수
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
    매도
   </a>
  </li>
@@ -443,11 +448,16 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id5">
-   매수
+   5일 이상 보유 종목 조회
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
+   매수
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
    매도
   </a>
  </li>
@@ -465,31 +475,31 @@ title="Print to PDF"
 <h1>주요 함수 정의<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <section id="id2">
 <h2>현재가 조회<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
-<p>현재가 조회를 위해서 먼저 KIS Developers 홈페이지 &gt; API 문서 &gt;  국내주식시세 &gt; 주식현재가 시세 (<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d</a>) 페이지에 접속하겠습니다.</p>
+<p>원하는 시장가에 매수 주문을 넣기 위해서 해당 종목의 현재가를 조회해야 합니다. 현재가 조회 방법을 알아보기 위해서 KIS Developers 홈페이지 &gt; API 문서 &gt; 국내주식시세 &gt; 주식현재가 시세(<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d</a>) 페이지에 접속하겠습니다.</p>
 <p><img alt="GET_IMAGE" src="../_images/get_current_price_1.png" /></p>
-<p>기본정보에서 GET 방식임을 확인할 수 있고 LAYOUT 을 통해 Request 함수의 headers 및 params 파라미터의 인자 값들을 확인할 수 있습니다.</p>
+<p>기본정보에서 주식현재가 시세 조회가 GET 방식임을 확인할 수 있고, LAYOUT 을 통해 Request 함수의 headers 및 params의 인자 값들을 확인할 수 있습니다.</p>
 <p><img alt="GET_IMAGE" src="../_images/get_current_price_2.png" /></p>
-<p>또한, 수신 받을 Response 객체의 형태도 미리 확인하여 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.</p>
+<p>또한, 수신 받을 Response 객체의 형태도 미리 확인하고 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.</p>
 <p><img alt="GET_IMAGE" src="../_images/get_current_price_3.png" /></p>
-<p>Request 와 Response 문서를 참고하여 특정 종목의 현재가를 조회하는 코드는 아래와 같습니다.</p>
+<p>Request 와 Response 문서를 참고하여 특정 종목의 현재가를 조회하는 함수는 아래와 같습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_current_price</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;005930&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;현재가 조회&quot;&quot;&quot;</span>
-    <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/quotations/inquire-price&quot;</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/quotations/inquire-price&quot;</span>
     <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PAH</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span> 
             <span class="s2">&quot;authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> 
             <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>
             <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span>
-            <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;FHKST01010100&quot;</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+            <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;FHKST01010100&quot;</span> 
     <span class="p">}</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;fid_cond_mrkt_div_code&quot;</span><span class="p">:</span><span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-    <span class="s2">&quot;fid_input_iscd&quot;</span><span class="p">:</span><span class="n">code</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="s2">&quot;fid_cond_mrkt_div_code&quot;</span><span class="p">:</span><span class="s2">&quot;J&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;fid_input_iscd&quot;</span><span class="p">:</span><span class="n">code</span><span class="p">,</span> 
     <span class="p">}</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output&#39;</span><span class="p">][</span><span class="s1">&#39;stck_prpr&#39;</span><span class="p">])</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output&#39;</span><span class="p">][</span><span class="s1">&#39;stck_prpr&#39;</span><span class="p">])</span> 
 </pre></div>
 </div>
 </div>
@@ -497,47 +507,46 @@ title="Print to PDF"
 </section>
 <section id="id3">
 <h2>잔고 조회<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
-<p>잔고 조회도 마찬가지로 KIS Developers의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 &gt; API 문서 &gt;  국내주식주문 &gt; 주식잔고조회 (<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_66c61080-674f-4c91-a0cc-db5e64e9a5e6">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_66c61080-674f-4c91-a0cc-db5e64e9a5e6</a>) 페이지에 접속하겠습니다.</p>
+<p>잔고 조회도 마찬가지로 KIS Developers의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 &gt; API 문서 &gt; 국내주식주문 &gt; 주식잔고조회(<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_66c61080-674f-4c91-a0cc-db5e64e9a5e6">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_66c61080-674f-4c91-a0cc-db5e64e9a5e6</a>) 페이지에 접속하겠습니다.</p>
 <p><img alt="GET_IMAGE" src="../_images/get_stock_balance_1.png" /></p>
-<p>앞 절의 현재가 조회와 마찬가지로 LAYOUT의 Request 문서를 참고하여 headers 및 params 파라미터의 인자 값들을 확인할 수 있습니다.
-Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.</p>
+<p>앞에서의 현재가 조회와 마찬가지로 LAYOUT의 Request 문서를 참고하여 headers 및 params의 인자 값들을 확인할 수 있습니다. Response 문서에서 수신 데이터 형태를 미리 확인하고 원하는 데이터를 추출하는 코드를 작성합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_stock_balance</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;주식 잔고조회&quot;&quot;&quot;</span>
-    <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/trading/inquire-balance&quot;</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/trading/inquire-balance&quot;</span>
     <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
         <span class="s2">&quot;authorization&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>
         <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span>
-        <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;TTTC8434R&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;custtype&quot;</span><span class="p">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+        <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;VTTC8434R&quot;</span><span class="p">,</span>  <span class="c1"># 실전 투자 &quot;TTTC8434R&quot;</span>
+        <span class="s2">&quot;custtype&quot;</span><span class="p">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;CANO&quot;</span><span class="p">:</span> <span class="n">CANO</span><span class="p">,</span>
         <span class="s2">&quot;ACNT_PRDT_CD&quot;</span><span class="p">:</span> <span class="n">ACNT_PRDT_CD</span><span class="p">,</span>
-        <span class="s2">&quot;AFHR_FLPR_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;OFL_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;INQR_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;UNPR_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;FUND_STTL_ICLD_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;FNCG_AMT_AUTO_RDPT_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;PRCS_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;CTX_AREA_FK100&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-        <span class="s2">&quot;CTX_AREA_NK100&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+        <span class="s2">&quot;AFHR_FLPR_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;OFL_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;INQR_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;UNPR_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FUND_STTL_ICLD_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FNCG_AMT_AUTO_RDPT_YN&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PRCS_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CTX_AREA_FK100&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CTX_AREA_NK100&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
     <span class="p">}</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-    <span class="n">stock_list</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output1&#39;</span><span class="p">]</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-    <span class="n">evaluation</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output2&#39;</span><span class="p">]</span> <span class="c1"># &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+    <span class="n">stock_list</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output1&#39;</span><span class="p">]</span>
+    <span class="n">evaluation</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output2&#39;</span><span class="p">]</span>
     <span class="n">stock_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">send_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;====주식 보유잔고====&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">stock_list</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;hldg_qty&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">stock_dict</span><span class="p">[</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;pdno&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;hldg_qty&#39;</span><span class="p">],</span> <span class="n">stock</span><span class="p">[</span><span class="s1">&#39;EVLU_ERNG_RT&#39;</span><span class="p">]]</span> <span class="c1"># &lt; 0: 보유 수량, 1: 평가수익율</span>
-            <span class="n">send_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;prdt_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;pdno&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;hldg_qty&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">주&quot;</span><span class="p">)</span>
+            <span class="n">stock_dict</span><span class="p">[</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;pdno&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;hldg_qty&#39;</span><span class="p">],</span> <span class="n">stock</span><span class="p">[</span><span class="s1">&#39;evlu_pfls_rt&#39;</span><span class="p">]]</span> <span class="c1"># 0: 보유 수량, 1: 평가손익율</span>
+            <span class="n">send_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;prdt_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;pdno&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;hldg_qty&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">주 </span><span class="si">{</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;evlu_pfls_rt&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-    <span class="n">send_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;주식 평가 금액: </span><span class="si">{</span><span class="n">evaluation</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;scts_evlu_amt&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">원&quot;</span><span class="p">)</span> 
+    <span class="n">send_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;주식 평가 금액: </span><span class="si">{</span><span class="n">evaluation</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;scts_evlu_amt&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">원&quot;</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
     <span class="n">send_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;평가 손익 합계: </span><span class="si">{</span><span class="n">evaluation</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;evlu_pfls_smtl_amt&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">원&quot;</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
@@ -552,10 +561,9 @@ Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데�
 </section>
 <section id="id4">
 <h2>잔여 현금 조회<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
-<p>잔여 현금 조회도 마찬가지로 KIS Developers의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 &gt; API 문서 &gt;  국내주식주문 &gt; 매수가능조회 (<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb</a>) 페이지에 접속하겠습니다.</p>
+<p>잔여 현금 조회도 마찬가지로 KIS Developers의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 &gt; API 문서 &gt; 국내주식주문 &gt; 매수가능조회(<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb</a>) 페이지에 접속하겠습니다.</p>
 <p><img alt="GET_IMAGE" src="../_images/get_balance_1.png" /></p>
-<p>앞 절의 잔여 현금  조회와 마찬가지로 LAYOUT의 Request 문서를 참고하여 headers 및 params 파라미터의 인자 값들을 확인할 수 있습니다.
-Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데이터를 어떻게 추출할지도 알 수 있습니다.</p>
+<p>LAYOUT의 Request 문서를 참고하여 headers 및 params의 인자 값들을 확인할 수 있습니다. Response 문서에서 수신 데이터 형태를 미리 확인하고 원하는 데이터를 추출하는 코드를 작성합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_balance</span><span class="p">():</span>
@@ -588,10 +596,66 @@ Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데�
 </div>
 </section>
 <section id="id5">
-<h2>매수<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<h2>5일 이상 보유 종목 조회<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<p>5일 이상 보유 중인 종목을 조회하기 위해서는 주식일별주문체결 정보를 조회 해야 합니다. KIS Developers 홈페이지 &gt; API 문서 &gt; 국내주식주문 &gt; 주식일별주문체결조회(<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_bc51f9f7-146f-4971-a5ae-ebd574acec12">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_bc51f9f7-146f-4971-a5ae-ebd574acec12</a>) 페이지에 접속하겠습니다.</p>
+<p><img alt="GET_IMAGE" src="../_images/stock_over_5d.png" /></p>
+<p>LAYOUT의 Request 문서를 참고하여 headers 및 params의 인자 값들을 확인할 수 있습니다. Response 문서에서 수신 데이터 형태를 미리 확인하고 원하는 데이터를 추출하는 코드를 작성합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_stock_5d_before</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">get_stock_before</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
+        <span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;uapi/domestic-stock/v1/trading/inquire-daily-ccld&quot;</span>
+        <span class="n">URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL_BASE</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;authorization&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">ACCESS_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;appKey&quot;</span><span class="p">:</span><span class="n">APP_KEY</span><span class="p">,</span>
+            <span class="s2">&quot;appSecret&quot;</span><span class="p">:</span><span class="n">APP_SECRET</span><span class="p">,</span>
+            <span class="s2">&quot;tr_id&quot;</span><span class="p">:</span><span class="s2">&quot;VTTC8001R&quot;</span><span class="p">,</span>  <span class="c1"># 실전 투자 &quot;TTTC8001R&quot;</span>
+            <span class="s2">&quot;custtype&quot;</span><span class="p">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;CANO&quot;</span><span class="p">:</span> <span class="n">CANO</span><span class="p">,</span>
+            <span class="s2">&quot;ACNT_PRDT_CD&quot;</span><span class="p">:</span> <span class="n">ACNT_PRDT_CD</span><span class="p">,</span>
+            <span class="s2">&quot;INQR_STRT_DT&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
+            <span class="s2">&quot;INQR_END_DT&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
+            <span class="s2">&quot;SLL_BUY_DVSN_CD&quot;</span><span class="p">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span> <span class="c1"># 00:전체, 01:매도, 02:매수</span>
+            <span class="s2">&quot;INQR_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span> <span class="c1"># 00: 역순</span>
+            <span class="s2">&quot;PDNO&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;CCLD_DVSN&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ORD_GNO_BRNO&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ODNO&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INQR_DVSN_3&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INQR_DVSN_1&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;CTX_AREA_FK100&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;CTX_AREA_NK100&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">stock_dict</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;output1&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">stock_dict</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="k">while</span> <span class="n">prev</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">:</span>
+        <span class="n">t_previous_5d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">prev</span><span class="p">)</span>
+        <span class="n">t_previous_5d</span> <span class="o">=</span> <span class="n">t_previous_5d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">bought_previous_5d_dict</span> <span class="o">=</span> <span class="n">get_stock_before</span><span class="p">(</span><span class="n">t_previous_5d</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bought_previous_5d_dict</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prev</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">sell_list_5d_over</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">bought_previous_5d_dict</span><span class="p">:</span>
+        <span class="n">sell_list_5d_over</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stock</span><span class="p">[</span><span class="s1">&#39;pdno&#39;</span><span class="p">])</span>
+    <span class="n">sell_list_5d_over</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">sell_list_5d_over</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">sell_list_5d_over</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>매수<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p>매수 주문도 마찬가지로 KIS Developers의 API 문서를 참고하겠습니다. KIS Developers 홈페이지 &gt; API 문서 &gt;  국내주식주문 &gt; 주식주문(현금) (<a class="reference external" href="https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb">https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock#L_aade4c72-5fb7-418a-9ff2-254b4d5f0ceb</a>) 페이지에 접속하겠습니다.</p>
 <p><img alt="GET_IMAGE" src="../_images/buy_1.png" /></p>
-<p>앞의 조회 요청들과 달리 주문 요청은 기본정보에서 POST 방식임을 확인할 수 있고 보안을 위해서 headers 에 hashkey 값을 입력해 줍니다.</p>
+<p>앞의 조회 요청들과 달리 주문 요청은 기본정보에서 POST 방식임을 확인할 수 있고 보안을 위해서 headers에 hashkey 값을 입력해 줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;005930&quot;</span><span class="p">,</span> <span class="n">qty</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">):</span>
@@ -626,8 +690,8 @@ Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데�
 </div>
 </div>
 </section>
-<section id="id6">
-<h2>매도<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<section id="id7">
+<h2>매도<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
 <p>매도 주문은 매수 주문 코드와 거의 똑같습니다. 다만, 거래ID 가 다릅니다.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -644,7 +708,7 @@ Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데�
 </tr>
 </tbody>
 </table>
-<p>따라서, headers 에서 거래 ID 만 바꿔 주겠습니다.</p>
+<p>간단하게 headers 에서 거래 ID 만 바꿔 주겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sell</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;005930&quot;</span><span class="p">,</span> <span class="n">qty</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">):</span>
@@ -678,7 +742,7 @@ Response 문서를 통해 객체의 형태도 미리 확인하여 원하는 데�
 </div>
 </div>
 </div>
-<p>KIS Developers의 공식 API 문서를 참고해서 손쉽게 주요 함수들의 정의를 마쳤습니다. 이외에 더 궁금하거나 까닭없이 에러가 발생하는 부분에 관해서는 KIS Develpers 포럼을 적극적으로 활용해 보시기 바랍니다. 다음 장부터는 자동매매의 주요 로직과 코드를 중심적으로 설명 드리겠습니다.</p>
+<p>KIS Developers의 공식 API 문서를 참고해서 손쉽게 주요 함수들의 정의를 마쳤습니다. 이외에 더 궁금하거나 까닭 없이 에러가 발생하는 부분에 관해서는 KIS Develpers 포럼을 적극적으로 활용해 보시기 바랍니다. FAQ와 Q&amp;A 세션에 이미 많은 질문과 응답들이 달려있습니다. 다음 절부터는 자동매매의 주요 로직과 코드를 중심적으로 설명드리겠습니다.</p>
 </section>
 </section>
 
