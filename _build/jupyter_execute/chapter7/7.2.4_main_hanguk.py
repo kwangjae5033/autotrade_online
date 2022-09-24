@@ -211,7 +211,7 @@ while True:
         break
 
 
-# 전체 코드의 로직을 볼 수 잇는 플로우 차트는 아래와 같습니다.
+# 전체 코드의 로직을 볼 수 있는 플로우 차트는 아래와 같습니다.
 
 # ![GET_IMAGE](images/hanguk_logic.png)
 
